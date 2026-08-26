@@ -23,6 +23,7 @@ import {
 import { AuditLog, ExchangeRate, Locale, User } from '../../types';
 import { formatCurrency } from '../../lib/crypto';
 import { DEFAULT_EXCHANGE_RATES, HUBS_DATA, INITIAL_EMPLOYEES } from '../../lib/constants';
+import { DashboardCharts } from './DashboardCharts';
 
 interface AdminPortalProps {
   currentUser: User;
@@ -202,54 +203,18 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         <button
           onClick={() => setActiveTab('SYSTEM_SETTINGS')}
           className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl transition-all cursor-pointer ${
-            activeTab === 'SYSTEM_SETTINGS' ? 'bg-white text-slate-900 shadow-xs font-bold text-blue-700' : 'text-slate-600 hover:text-slate-900'
+            activeTab === 'SYSTEM_SETTINGS' ? 'bg-white text-slate-900 shadow-xs font-bold text-brand-600' : 'text-slate-600 hover:text-slate-900'
           }`}
         >
-          <Building2 className="w-3.5 h-3.5 text-blue-600" />
+          <Building2 className="w-3.5 h-3.5 text-brand-500" />
           <span>{isAr ? 'إعدادات النظام وعناويننا' : 'System Hubs & Addresses'}</span>
         </button>
       </div>
 
-      {/* TAB 1: FINANCIAL METRICS */}
+      {/* TAB 1: FINANCIAL METRICS & ANALYTICS CHARTS */}
       {activeTab === 'METRICS' && (
         <div className="space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-              <div className="flex items-center justify-between text-slate-500 mb-2">
-                <span className="text-xs font-semibold">{isAr ? 'إجمالي التأمين المحجوز (Escrow)' : 'Total Locked Escrow'}</span>
-                <Lock className="w-4 h-4 text-amber-500" />
-              </div>
-              <div className="text-2xl font-black text-slate-900">$680.00</div>
-              <span className="text-[11px] text-emerald-600 font-semibold mt-1 block">100% مغطى ومضمون</span>
-            </div>
-
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-              <div className="flex items-center justify-between text-slate-500 mb-2">
-                <span className="text-xs font-semibold">{isAr ? 'صافي عمولة المنصة المحققة' : 'Net Platform Revenue'}</span>
-                <TrendingUp className="w-4 h-4 text-emerald-500" />
-              </div>
-              <div className="text-2xl font-black text-emerald-600">$1,620.00</div>
-              <span className="text-[11px] text-slate-400 mt-1 block">رسوم فحص + هوامش تشغيل</span>
-            </div>
-
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-              <div className="flex items-center justify-between text-slate-500 mb-2">
-                <span className="text-xs font-semibold">{isAr ? 'المسافرون النشطون الموثقون' : 'Active Verified Travelers'}</span>
-                <Plane className="w-4 h-4 text-blue-500" />
-              </div>
-              <div className="text-2xl font-black text-blue-600">48 مسافر</div>
-              <span className="text-[11px] text-slate-400 mt-1 block">رحلات طيران مجدولة هذا الأسبوع</span>
-            </div>
-
-            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-              <div className="flex items-center justify-between text-slate-500 mb-2">
-                <span className="text-xs font-semibold">{isAr ? 'فروع المراكز المعتمدة' : 'Active Physical Hubs'}</span>
-                <Building2 className="w-4 h-4 text-purple-500" />
-              </div>
-              <div className="text-2xl font-black text-slate-900">{HUBS_DATA.length} فروع</div>
-              <span className="text-[11px] text-purple-600 font-semibold mt-1 block">عمان، الجزائر، مسقط، القاهرة، الرياض</span>
-            </div>
-          </div>
+          <DashboardCharts locale={locale} />
         </div>
       )}
 
@@ -258,7 +223,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         <div className="space-y-6">
           {empSuccessMsg && (
             <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-2xl text-xs font-bold flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0" />
               <span>{empSuccessMsg}</span>
             </div>
           )}
@@ -267,7 +232,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
           <form onSubmit={handleCreateEmployee} className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4 text-xs">
             <div className="border-b border-slate-200 pb-3">
               <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <UserPlus className="w-4 h-4 text-blue-600" />
+                <UserPlus className="w-4 h-4 text-brand-500" />
                 <span>{isAr ? 'إنشاء حساب موظف جديد وتعيين الفرع' : 'Create Staff Account & Assign Hub'}</span>
               </h3>
               <p className="text-slate-500 mt-0.5">
@@ -277,7 +242,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 md:grid-cols-3 gap-4">
               <div>
                 <label className="block font-semibold text-slate-700 mb-1">{isAr ? 'اسم الموظف الكامل' : 'Employee Full Name'}</label>
                 <input
@@ -344,7 +309,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                 <button
                   type="submit"
                   disabled={isCreatingEmp}
-                  className="w-full flex items-center justify-center gap-1.5 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors cursor-pointer disabled:opacity-50"
+                  className="w-full flex items-center justify-center gap-1.5 px-4 py-2.5 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-xl transition-colors cursor-pointer disabled:opacity-50"
                 >
                   <Key className="w-3.5 h-3.5" />
                   <span>{isCreatingEmp ? (isAr ? 'جاري الحفظ...' : 'Saving...') : (isAr ? 'إنشاء وتفعيل الحساب' : 'Create Staff Account')}</span>
@@ -374,7 +339,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                 <tbody className="divide-y divide-slate-100 text-slate-800">
                   {employeesList.map((emp) => (
                     <tr key={emp.id} className="hover:bg-slate-50">
-                      <td className="p-3 font-mono font-bold text-blue-600">{emp.employeeCode}</td>
+                      <td className="p-3 font-mono font-bold text-brand-500">{emp.employeeCode}</td>
                       <td className="p-3 font-semibold">{emp.fullName}</td>
                       <td className="p-3 font-mono text-slate-500">{emp.email}</td>
                       <td className="p-3 font-semibold">
@@ -446,7 +411,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                     <td className="p-3">
                       <button
                         onClick={() => setSelectedUserForKyc(u)}
-                        className="px-2.5 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-lg font-bold flex items-center gap-1 cursor-pointer transition-colors"
+                        className="px-2.5 py-1 bg-brand-50 hover:bg-brand-100 text-brand-600 border border-brand-200 rounded-lg font-bold flex items-center gap-1 cursor-pointer transition-colors"
                       >
                         <FileText className="w-3 h-3" />
                         <span>{isAr ? 'فحص الصور' : 'Inspect Photos'}</span>
@@ -456,7 +421,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                       <div className="flex gap-2">
                         <button
                           onClick={() => onApproveKYC(u.id, 'APPROVED')}
-                          className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold cursor-pointer"
+                          className="px-2.5 py-1 bg-teal-600 hover:bg-emerald-700 text-white rounded-lg font-bold cursor-pointer"
                         >
                           {isAr ? 'اعتماد' : 'Approve'}
                         </button>
@@ -495,7 +460,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                   </button>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 text-xs">
                   <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
                     <span className="font-bold text-slate-800 block">
                       {isAr ? 'بطاقة الهوية الوطنية (الوجه الأمامي)' : 'National ID (Front Side)'}
@@ -568,7 +533,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                       onApproveKYC(selectedUserForKyc.id, 'APPROVED');
                       setSelectedUserForKyc(null);
                     }}
-                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl cursor-pointer text-xs"
+                    className="px-4 py-2 bg-teal-600 hover:bg-emerald-700 text-white font-bold rounded-xl cursor-pointer text-xs"
                   >
                     {isAr ? 'اعتماد وتوثيق الهوية' : 'Approve & Verify KYC'}
                   </button>
@@ -584,11 +549,11 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
           <h3 className="text-sm font-bold text-slate-900">{isAr ? 'أسعار الصرف المثبتة لمنع تقلبات العملة أثناء الرحلة' : 'Locked Multi-Currency Rates'}</h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
             {exchangeRates.map((r) => (
               <div key={r.currency} className="p-4 bg-slate-50 border border-slate-200 rounded-xl">
                 <span className="font-bold text-slate-700 block mb-1">1 USD =</span>
-                <div className="text-xl font-black text-blue-700">
+                <div className="text-xl font-black text-brand-600">
                   {r.rateToUsd} {r.currency}
                 </div>
                 <span className="text-[10px] text-slate-400 mt-1 block">تحديث دوري مثبت</span>
@@ -632,7 +597,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-3">
             <button
               onClick={() => handleCronExecute('CLEANUP')}
               disabled={cronRunning}
@@ -642,7 +607,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                 <span className="block text-slate-900">تشغيل تنظيف الحجوزات المنتهية</span>
                 <span className="text-[11px] text-slate-500 font-normal">Expire stale bookings</span>
               </div>
-              <Play className="w-4 h-4 text-blue-600" />
+              <Play className="w-4 h-4 text-brand-500" />
             </button>
 
             <button
@@ -654,7 +619,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                 <span className="block text-slate-900">معالجة مهل النزاعات التلقائية</span>
                 <span className="text-[11px] text-slate-500 font-normal">Resolve dispute timeouts</span>
               </div>
-              <Play className="w-4 h-4 text-emerald-600" />
+              <Play className="w-4 h-4 text-teal-600" />
             </button>
 
             <button
@@ -686,7 +651,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
           <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200">
             <div>
               <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <Building2 className="w-5 h-5 text-blue-600" />
+                <Building2 className="w-5 h-5 text-brand-500" />
                 <span>{isAr ? 'إعدادات النظام وعناوين الفروع الرسمية (Our Addresses & Hub Registry)' : 'System Settings & Official Hub Directory'}</span>
               </h3>
               <p className="text-slate-500 mt-1">
@@ -725,7 +690,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2 pt-1">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1">
                     <div>
                       <span className="text-slate-400 block text-[10px] uppercase font-bold">{isAr ? 'هاتف الفرع' : 'Phone'}</span>
                       <span className="font-mono font-semibold text-slate-800 text-xs" dir="ltr">{hub.phone}</span>
@@ -743,7 +708,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 
                   <div className="flex items-center justify-between text-[11px]">
                     <span className="text-slate-500">{isAr ? 'السعة التخزينية المتاحة:' : 'Capacity:'}</span>
-                    <span className="font-bold text-blue-700">{hub.storageCapacityKg || 2500} كغ (نشط)</span>
+                    <span className="font-bold text-brand-600">{hub.storageCapacityKg || 2500} كغ (نشط)</span>
                   </div>
                 </div>
               </div>

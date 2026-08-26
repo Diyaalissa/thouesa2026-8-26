@@ -209,6 +209,7 @@ export interface Trip {
   isEscrowPaid: boolean;
   status: TripStatus;
   ticketDocUrl?: string;
+  documents?: Record<string, { url: string; fileName: string; uploadedAt: string }>;
   manifestId?: string;
   emergencyReason?: string;
   createdAt: string;
@@ -333,4 +334,30 @@ export interface RoutePricing {
   hubFeeKg: number;
   insuranceRatePercent: number;
   averageFlightHours: number;
+}
+
+export type NotificationType =
+  | 'ORDER_CREATED'
+  | 'KYC_SUBMITTED'
+  | 'INSPECTION_COMPLETED'
+  | 'ESCROW_LOCKED'
+  | 'ESCROW_RELEASED'
+  | 'DISPUTE_RAISED'
+  | 'TRIP_REGISTERED'
+  | 'WEIGHT_DISCREPANCY'
+  | 'SYSTEM_ALERT';
+
+export interface SystemNotification {
+  id: string;
+  type: NotificationType;
+  titleAr: string;
+  titleEn: string;
+  messageAr: string;
+  messageEn: string;
+  targetRole?: UserRole | 'ALL' | 'PUBLIC';
+  targetUserId?: string;
+  referenceId?: string;
+  isRead: boolean;
+  priority?: 'HIGH' | 'NORMAL' | 'LOW';
+  createdAt: string;
 }

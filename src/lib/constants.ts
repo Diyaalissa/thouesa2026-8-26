@@ -1,11 +1,11 @@
 import { Employee, Hub, RoutePricing, ThemeMode, User } from '../types';
 
 export const THEMES: { id: ThemeMode; labelAr: string; labelEn: string; bgClass: string; cardClass: string; accentColor: string }[] = [
-  { id: 'slate', labelAr: 'الوضع الداكن الفاخر', labelEn: 'Luxury Slate Dark', bgClass: 'bg-slate-950 text-slate-100', cardClass: 'bg-slate-900 border-slate-800 text-slate-100', accentColor: '#3b82f6' },
-  { id: 'light', labelAr: 'الوضع الأبيض المؤسسي', labelEn: 'Enterprise Clean Light', bgClass: 'bg-slate-50 text-slate-900', cardClass: 'bg-white border-slate-200 text-slate-900', accentColor: '#2563eb' },
-  { id: 'navy', labelAr: 'الأزرق البحري الجوي', labelEn: 'Aerospace Deep Navy', bgClass: 'bg-slate-950 text-sky-100', cardClass: 'bg-slate-900/90 border-sky-900/50 text-sky-100', accentColor: '#0284c7' },
-  { id: 'emerald', labelAr: 'الزمردي العربي', labelEn: 'Arabian Emerald', bgClass: 'bg-stone-950 text-emerald-100', cardClass: 'bg-stone-900 border-emerald-900/60 text-emerald-100', accentColor: '#059669' },
-  { id: 'desert', labelAr: 'الصحراء والذهب', labelEn: 'Desert Gold Warm', bgClass: 'bg-amber-950 text-amber-100', cardClass: 'bg-amber-950/80 border-amber-800/50 text-amber-100', accentColor: '#d97706' },
+  { id: 'slate', labelAr: 'الوضع الداكن الفاخر', labelEn: 'Luxury Slate Dark', bgClass: 'bg-slate-950 text-slate-100', cardClass: 'bg-slate-900 border-slate-800 text-slate-100', accentColor: '#ff8c00' },
+  { id: 'light', labelAr: 'الوضع الأبيض المؤسسي', labelEn: 'Enterprise Clean Light', bgClass: 'bg-slate-50 text-slate-900', cardClass: 'bg-white border-slate-200 text-slate-900', accentColor: '#ff8c00' },
+  { id: 'navy', labelAr: 'الأزرق البحري الجوي', labelEn: 'Aerospace Deep Navy', bgClass: 'bg-slate-950 text-sky-100', cardClass: 'bg-slate-900/90 border-sky-900/50 text-sky-100', accentColor: '#ff8c00' },
+  { id: 'emerald', labelAr: 'الزمردي العربي', labelEn: 'Arabian Emerald', bgClass: 'bg-stone-950 text-emerald-100', cardClass: 'bg-stone-900 border-emerald-900/60 text-emerald-100', accentColor: '#ff8c00' },
+  { id: 'desert', labelAr: 'الصحراء والذهب', labelEn: 'Desert Gold Warm', bgClass: 'bg-amber-950 text-amber-100', cardClass: 'bg-amber-950/80 border-amber-800/50 text-amber-100', accentColor: '#ff8c00' },
 ];
 
 export const INITIAL_EMPLOYEES: Employee[] = [

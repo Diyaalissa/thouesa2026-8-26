@@ -7,6 +7,7 @@ import {
   Hub,
   Manifest,
   Shipment,
+  SystemNotification,
   Trip,
   User,
 } from '../src/types';
@@ -23,6 +24,7 @@ class DataStore {
   public transactions: Map<string, FinancialTransaction> = new Map();
   public disputes: Map<string, Dispute> = new Map();
   public auditLogs: AuditLog[] = [];
+  public notifications: SystemNotification[] = [];
 
   constructor() {
     this.seedInitialData();
@@ -479,9 +481,80 @@ class DataStore {
         createdAt: new Date(Date.now() - 24 * 3600000).toISOString(),
       }
     );
+
+    // 8. Seed Real-time System Notifications
+    this.notifications = [
+      {
+        id: 'notif-001',
+        type: 'ORDER_CREATED',
+        titleAr: 'طلب شحن جديد بانتظار الفحص',
+        titleEn: 'New Parcel Order Created',
+        messageAr: 'قام طارق الهاشمي بإنشاء طلب إرسال طرد iPad Pro (TH-JOR-ALG-202608-8841) من فرع عمان إلى فرع الجزائر.',
+        messageEn: 'Tariq Al-Hashemi created a parcel shipment (TH-JOR-ALG-202608-8841) from Amman to Algiers.',
+        targetRole: 'ALL',
+        referenceId: ship1.id,
+        isRead: false,
+        priority: 'NORMAL',
+        createdAt: new Date(Date.now() - 30 * 60000).toISOString(),
+      },
+      {
+        id: 'notif-002',
+        type: 'KYC_SUBMITTED',
+        titleAr: 'وثائق هوية مسافر جديدة للتدقيق',
+        titleEn: 'New Traveler KYC Submitted',
+        messageAr: 'قام المسافر كريم بوجمعة برفع صور جواز السفر وبطاقة الهوية الوطنية بانتظار اعتماد الإدارة.',
+        messageEn: 'Traveler Karim Boujemaa uploaded passport & national ID documents awaiting Admin approval.',
+        targetRole: 'MASTER_ADMIN',
+        referenceId: 'usr-traveler-202',
+        isRead: false,
+        priority: 'HIGH',
+        createdAt: new Date(Date.now() - 55 * 60000).toISOString(),
+      },
+      {
+        id: 'notif-003',
+        type: 'ESCROW_LOCKED',
+        titleAr: 'تم إيداع ضمان مالي مشدد (Escrow)',
+        titleEn: 'Security Escrow Deposit Locked',
+        messageAr: 'تم حجز مبلغ $650.00 في خزينة الضمان لرحلة RJ511 لتأمين سلامة طرود المسافر.',
+        messageEn: 'Escrow deposit of $650.00 locked in secure vault for flight RJ511.',
+        targetRole: 'MASTER_ADMIN',
+        referenceId: trip1.id,
+        isRead: true,
+        priority: 'NORMAL',
+        createdAt: new Date(Date.now() - 3 * 3600000).toISOString(),
+      },
+      {
+        id: 'notif-004',
+        type: 'INSPECTION_COMPLETED',
+        titleAr: 'اكتمال الفحص الأمني وتثبيت الختم',
+        titleEn: 'Hub Inspection & Security Seal Applied',
+        messageAr: 'قام ضابط الفرع عمر النجار بفحص وتثبيت الختم الأمني الإلكتروني (SEAL-AMM-98231).',
+        messageEn: 'Hub Agent Omar Al-Najjar inspected & sealed parcel (SEAL-AMM-98231).',
+        targetRole: 'ALL',
+        referenceId: ship1.id,
+        isRead: true,
+        priority: 'NORMAL',
+        createdAt: new Date(Date.now() - 5 * 3600000).toISOString(),
+      },
+    ];
   }
 
   // Helper Methods for Atomic Operations & Queries
+  public pushNotification(notif: Omit<SystemNotification, 'id' | 'createdAt' | 'isRead'>): SystemNotification {
+    const fullNotif: SystemNotification = {
+      ...notif,
+      id: `notif-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+      isRead: false,
+      createdAt: new Date().toISOString(),
+    };
+    this.notifications.unshift(fullNotif);
+    // Keep max 100 notifications
+    if (this.notifications.length > 100) {
+      this.notifications.pop();
+    }
+    return fullNotif;
+  }
+
   public logAudit(log: Omit<AuditLog, 'id' | 'createdAt'>): AuditLog {
     const fullLog: AuditLog = {
       ...log,

@@ -1,12 +1,30 @@
 import { Request, Response, Router } from 'express';
+import rateLimit from 'express-rate-limit';
 import { db } from '../store';
 import { DEMO_PROFILES } from '../../src/lib/constants';
 import { KYCStatus, User, UserRole } from '../../src/types';
+import { broadcastNotification } from './notifications';
 
 export const authRouter = Router();
 
+// Rate limiter for authentication and sign-in protection (Brute-force protection)
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes window
+  max: 30, // Limit each IP to 30 authentication requests per windowMs
+  standardHeaders: true, // Return rate limit info in `RateLimit-*` headers
+  legacyHeaders: false, // Disable `X-RateLimit-*` headers
+  message: {
+    success: false,
+    error: 'عدد محاولات تسجيل الدخول تجاوز الحد المسموح به. يرجى المحاولة بعد 15 دقيقة (Rate limit exceeded).',
+  },
+});
+
 // Current session / active profile
 let currentUserId = 'usr-sender-101';
+
+authRouter.use('/signin', authLimiter);
+authRouter.use('/signup', authLimiter);
+authRouter.use('/employee-login', authLimiter);
 
 authRouter.get('/me', (req: Request, res: Response) => {
   const user = db.users.get(currentUserId) || db.users.get('usr-sender-101');
@@ -362,5 +380,45 @@ authRouter.post('/kyc/review', (req: Request, res: Response) => {
     success: true,
     message: `KYC status updated to ${status}`,
     user,
+  });
+});
+
+// Firebase Auth Sync
+authRouter.post('/sync-firebase', (req: Request, res: Response) => {
+  const { user } = req.body;
+  if (!user || !user.id) {
+    return res.status(400).json({ success: false, error: 'User data required' });
+  }
+
+  // Check if exists
+  let existingUser = db.users.get(user.id);
+  
+  if (existingUser) {
+    // Update
+    existingUser = { ...existingUser, ...user };
+    db.users.set(user.id, existingUser);
+  } else {
+    // Create new
+    db.users.set(user.id, user);
+    // Give them a welcome wallet
+    const wallet = {
+      id: `wlt-${user.id}`,
+      userId: user.id,
+      balance: user.role === 'TRAVELER' ? 1200.0 : 500.0,
+      lockedEscrowDeposit: 0.0,
+      pendingEarnings: 0.0,
+      currency: 'USD' as const,
+      updatedAt: new Date().toISOString(),
+    };
+    db.wallets.set(user.id, wallet);
+    existingUser = user;
+  }
+  
+  currentUserId = existingUser.id;
+  
+  res.json({
+    success: true,
+    user: existingUser,
+    wallet: db.wallets.get(existingUser.id)
   });
 });

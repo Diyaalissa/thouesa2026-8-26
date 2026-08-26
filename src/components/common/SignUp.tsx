@@ -349,13 +349,13 @@ export const SignUp: React.FC<SignUpProps> = ({
       dir={isAr ? 'rtl' : 'ltr'}
     >
       {/* 1. STEP INDICATOR BAR */}
-      <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-800 text-xs">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-800 text-xs">
         <div className="flex items-center gap-2">
           <span
             className={`w-7 h-7 rounded-xl flex items-center justify-center font-bold text-xs ${
               step === 'FORM'
-                ? 'bg-blue-600 text-white ring-2 ring-blue-400/40'
-                : 'bg-emerald-600 text-white'
+                ? 'bg-brand-500 text-white ring-2 ring-brand-300/40'
+                : 'bg-teal-600 text-white'
             }`}
           >
             {step !== 'FORM' ? <CheckCircle2 className="w-4 h-4" /> : '1'}
@@ -372,7 +372,7 @@ export const SignUp: React.FC<SignUpProps> = ({
 
         <div className="h-0.5 flex-1 mx-4 bg-slate-800 relative">
           <div
-            className={`h-full bg-blue-500 transition-all duration-500 ${
+            className={`h-full bg-brand-400 transition-all duration-500 ${
               step === 'FORM' ? 'w-0' : step === 'PENDING_VERIFICATION' ? 'w-1/2' : 'w-full'
             }`}
           />
@@ -382,9 +382,9 @@ export const SignUp: React.FC<SignUpProps> = ({
           <span
             className={`w-7 h-7 rounded-xl flex items-center justify-center font-bold text-xs ${
               step === 'PENDING_VERIFICATION'
-                ? 'bg-blue-600 text-white ring-2 ring-blue-400/40 animate-pulse'
+                ? 'bg-brand-500 text-white ring-2 ring-brand-300/40 animate-pulse'
                 : step === 'VERIFIED'
-                ? 'bg-emerald-600 text-white'
+                ? 'bg-teal-600 text-white'
                 : 'bg-slate-800 text-slate-400'
             }`}
           >
@@ -426,19 +426,19 @@ export const SignUp: React.FC<SignUpProps> = ({
             <label className="block text-xs font-semibold text-slate-300 mb-1.5">
               {isAr ? 'نوع الحساب والغرض الأساسي:' : 'Account Purpose & Role:'}
             </label>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() => handleInputChange('role', 'SENDER')}
                 className={`flex items-center gap-2.5 p-3 rounded-2xl border text-start transition-all cursor-pointer ${
                   formData.role === 'SENDER'
-                    ? 'bg-blue-600/20 border-blue-500 text-white ring-1 ring-blue-500'
+                    ? 'bg-brand-500/20 border-brand-400 text-white ring-1 ring-brand-400'
                     : 'bg-slate-800/60 border-slate-700/80 text-slate-300 hover:bg-slate-800'
                 }`}
               >
                 <div
                   className={`w-8 h-8 rounded-xl flex items-center justify-center ${
-                    formData.role === 'SENDER' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'
+                    formData.role === 'SENDER' ? 'bg-brand-500 text-white' : 'bg-slate-700 text-slate-300'
                   }`}
                 >
                   <Box className="w-4 h-4" />
@@ -456,13 +456,13 @@ export const SignUp: React.FC<SignUpProps> = ({
                 onClick={() => handleInputChange('role', 'TRAVELER')}
                 className={`flex items-center gap-2.5 p-3 rounded-2xl border text-start transition-all cursor-pointer ${
                   formData.role === 'TRAVELER'
-                    ? 'bg-emerald-600/20 border-emerald-500 text-white ring-1 ring-emerald-500'
+                    ? 'bg-teal-600/20 border-emerald-500 text-white ring-1 ring-emerald-500'
                     : 'bg-slate-800/60 border-slate-700/80 text-slate-300 hover:bg-slate-800'
                 }`}
               >
                 <div
                   className={`w-8 h-8 rounded-xl flex items-center justify-center ${
-                    formData.role === 'TRAVELER' ? 'bg-emerald-600 text-white' : 'bg-slate-700 text-slate-300'
+                    formData.role === 'TRAVELER' ? 'bg-teal-600 text-white' : 'bg-slate-700 text-slate-300'
                   }`}
                 >
                   <Plane className="w-4 h-4" />
@@ -490,7 +490,7 @@ export const SignUp: React.FC<SignUpProps> = ({
                 value={formData.fullName}
                 onChange={(e) => handleInputChange('fullName', e.target.value)}
                 placeholder={isAr ? 'مثال: محمد عبدالله الشمري' : 'e.g. Tariq Al-Hashemi'}
-                className="w-full ps-10 pe-3.5 py-2.5 bg-slate-800/90 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-hidden focus:border-blue-500 transition-colors"
+                className="w-full ps-10 pe-3.5 py-2.5 bg-slate-800/90 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-hidden focus:border-brand-400 transition-colors"
               />
             </div>
           </div>
@@ -500,13 +500,13 @@ export const SignUp: React.FC<SignUpProps> = ({
             <label className="block text-xs font-semibold text-slate-300 mb-1">
               {isAr ? 'رقم الهاتف الجوال لتلقي رمز التحقق (SMS/WhatsApp) *' : 'Mobile Phone for OTP Verification *'}
             </label>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-2">
               {/* Country Dial Code */}
               <div className="relative sm:col-span-1">
                 <select
                   value={formData.countryCode}
                   onChange={(e) => handleInputChange('countryCode', e.target.value)}
-                  className="w-full py-2.5 px-3 bg-slate-800/90 border border-slate-700 rounded-xl text-xs text-white focus:outline-hidden focus:border-blue-500 cursor-pointer"
+                  className="w-full py-2.5 px-3 bg-slate-800/90 border border-slate-700 rounded-xl text-xs text-white focus:outline-hidden focus:border-brand-400 cursor-pointer"
                 >
                   {COUNTRY_CODES.map((c) => (
                     <option key={c.code} value={c.code}>
@@ -525,7 +525,7 @@ export const SignUp: React.FC<SignUpProps> = ({
                   value={formData.phoneNumber}
                   onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
                   placeholder={isAr ? '79 123 4567 أو 550 12 34 56' : '79 123 4567'}
-                  className="w-full ps-10 pe-3.5 py-2.5 bg-slate-800/90 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-hidden focus:border-blue-500 transition-colors"
+                  className="w-full ps-10 pe-3.5 py-2.5 bg-slate-800/90 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-hidden focus:border-brand-400 transition-colors"
                 />
               </div>
             </div>
@@ -544,7 +544,7 @@ export const SignUp: React.FC<SignUpProps> = ({
                 value={formData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
                 placeholder="user@example.com"
-                className="w-full ps-10 pe-3.5 py-2.5 bg-slate-800/90 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-hidden focus:border-blue-500 transition-colors"
+                className="w-full ps-10 pe-3.5 py-2.5 bg-slate-800/90 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-hidden focus:border-brand-400 transition-colors"
               />
             </div>
           </div>
@@ -556,7 +556,7 @@ export const SignUp: React.FC<SignUpProps> = ({
               <span>{isAr ? 'العنوان الجغرافي وموقع الاستلام / التوصيل *' : 'Physical Residence & Delivery Address *'}</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3">
               <div>
                 <label className="block text-[11px] font-medium text-slate-400 mb-1">
                   {isAr ? 'الدولة' : 'Country'}
@@ -564,7 +564,7 @@ export const SignUp: React.FC<SignUpProps> = ({
                 <select
                   value={formData.country}
                   onChange={(e) => handleInputChange('country', e.target.value)}
-                  className="w-full py-2 px-3 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-hidden focus:border-blue-500"
+                  className="w-full py-2 px-3 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-hidden focus:border-brand-400"
                 >
                   <option value={isAr ? 'الأردن' : 'Jordan'}>🇯🇴 {isAr ? 'الأردن' : 'Jordan'}</option>
                   <option value={isAr ? 'الجزائر' : 'Algeria'}>🇩🇿 {isAr ? 'الجزائر' : 'Algeria'}</option>
@@ -585,7 +585,7 @@ export const SignUp: React.FC<SignUpProps> = ({
                   value={formData.city}
                   onChange={(e) => handleInputChange('city', e.target.value)}
                   placeholder={isAr ? 'عمان / الجزائر العاصمة / مسقط' : 'Amman / Algiers / Muscat'}
-                  className="w-full py-2 px-3 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-hidden focus:border-blue-500"
+                  className="w-full py-2 px-3 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-hidden focus:border-brand-400"
                 />
               </div>
             </div>
@@ -600,7 +600,7 @@ export const SignUp: React.FC<SignUpProps> = ({
                 value={formData.streetAddress}
                 onChange={(e) => handleInputChange('streetAddress', e.target.value)}
                 placeholder={isAr ? 'شارع مكة، حي الروابي، بالقرب من مجمع الأمل' : 'Medina St, Al-Rawabi District'}
-                className="w-full py-2 px-3 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-hidden focus:border-blue-500"
+                className="w-full py-2 px-3 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-hidden focus:border-brand-400"
               />
             </div>
 
@@ -613,7 +613,7 @@ export const SignUp: React.FC<SignUpProps> = ({
                 value={formData.buildingOrNotes}
                 onChange={(e) => handleInputChange('buildingOrNotes', e.target.value)}
                 placeholder={isAr ? 'عمارة 24، الطابق الثاني، شقة 5' : 'Bldg 24, Apt 5'}
-                className="w-full py-2 px-3 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-hidden focus:border-blue-500"
+                className="w-full py-2 px-3 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-hidden focus:border-brand-400"
               />
             </div>
           </div>
@@ -641,7 +641,7 @@ export const SignUp: React.FC<SignUpProps> = ({
                 value={formData.password}
                 onChange={(e) => handleInputChange('password', e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full ps-10 pe-10 py-2.5 bg-slate-800/90 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-hidden focus:border-blue-500 transition-colors"
+                className="w-full ps-10 pe-10 py-2.5 bg-slate-800/90 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-hidden focus:border-brand-400 transition-colors"
               />
               <button
                 type="button"
@@ -661,13 +661,13 @@ export const SignUp: React.FC<SignUpProps> = ({
           </div>
 
           {/* Aviation & Escrow Terms */}
-          <div className="flex items-start gap-2.5 p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-xs">
+          <div className="flex items-start gap-2.5 p-3 rounded-2xl bg-brand-400/10 border border-brand-400/20 text-xs">
             <input
               type="checkbox"
               id="signup-terms"
               checked={formData.acceptTerms}
               onChange={(e) => handleInputChange('acceptTerms', e.target.checked)}
-              className="mt-0.5 rounded-sm border-slate-700 bg-slate-800 text-blue-600 focus:ring-blue-500 cursor-pointer"
+              className="mt-0.5 rounded-sm border-slate-700 bg-slate-800 text-brand-500 focus:ring-brand-400 cursor-pointer"
             />
             <label htmlFor="signup-terms" className="text-slate-300 leading-relaxed cursor-pointer select-none">
               {isAr
@@ -681,7 +681,7 @@ export const SignUp: React.FC<SignUpProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex-1 flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
+              className="w-full flex-1 flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-400 hover:to-brand-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-brand-500/30 transition-all hover:scale-[1.01] cursor-pointer disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>
@@ -714,7 +714,7 @@ export const SignUp: React.FC<SignUpProps> = ({
               <button
                 type="button"
                 onClick={onSwitchToSignIn}
-                className="text-blue-400 hover:text-blue-300 font-bold underline cursor-pointer"
+                className="text-brand-300 hover:text-brand-300 font-bold underline cursor-pointer"
               >
                 {isAr ? 'سجل دخولك هنا' : 'Sign in here'}
               </button>
@@ -729,7 +729,7 @@ export const SignUp: React.FC<SignUpProps> = ({
       {step === 'PENDING_VERIFICATION' && (
         <div className="space-y-6">
           {/* Header Status Card */}
-          <div className="p-5 rounded-2xl bg-gradient-to-br from-blue-900/40 via-slate-900 to-indigo-950/40 border border-blue-500/30 text-center relative overflow-hidden">
+          <div className="p-5 rounded-2xl bg-gradient-to-br from-brand-900/40 via-slate-900 to-brand-950/40 border border-brand-400/30 text-center relative overflow-hidden">
             <div className="w-14 h-14 mx-auto rounded-2xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center mb-3">
               <Clock className="w-7 h-7 animate-pulse" />
             </div>
@@ -755,20 +755,20 @@ export const SignUp: React.FC<SignUpProps> = ({
               <button
                 type="button"
                 onClick={() => setStep('FORM')}
-                className="flex items-center gap-1 text-[11px] text-blue-400 hover:text-blue-300 font-semibold cursor-pointer"
+                className="flex items-center gap-1 text-[11px] text-brand-300 hover:text-brand-300 font-semibold cursor-pointer"
               >
                 <Edit3 className="w-3.5 h-3.5" />
                 <span>{isAr ? 'تعديل البيانات' : 'Edit Details'}</span>
               </button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 text-xs">
               <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
                 <span className="text-slate-400 text-[11px] block">{isAr ? 'الاسم الكامل' : 'Full Name'}</span>
                 <span className="font-bold text-white text-sm">
                   {registeredUser?.fullName || formData.fullName}
                 </span>
-                <span className="inline-block mt-1 px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-300 text-[10px] font-semibold">
+                <span className="inline-block mt-1 px-2 py-0.5 rounded-md bg-brand-400/20 text-brand-300 text-[10px] font-semibold">
                   {formData.role === 'TRAVELER' ? (isAr ? 'مسافر معتمد' : 'Traveler') : (isAr ? 'مرسل / متسوق' : 'Sender')}
                 </span>
               </div>
@@ -806,11 +806,11 @@ export const SignUp: React.FC<SignUpProps> = ({
           </div>
 
           {/* Interactive OTP Verification Section */}
-          <div className="bg-slate-900 p-5 rounded-2xl border border-blue-500/40 shadow-xl space-y-4">
+          <div className="bg-slate-900 p-5 rounded-2xl border border-brand-400/40 shadow-xl space-y-4">
             <div className="flex items-center justify-between">
               <div>
                 <h4 className="text-sm font-bold text-white flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-blue-400" />
+                  <ShieldCheck className="w-4 h-4 text-brand-300" />
                   <span>{isAr ? 'أدخل رمز التحقق (OTP)' : 'Enter 4-Digit OTP Code'}</span>
                 </h4>
                 <p className="text-[11px] text-slate-400 mt-0.5">
@@ -827,7 +827,7 @@ export const SignUp: React.FC<SignUpProps> = ({
                   setOtpCode('9842');
                   handleVerifyOtp('9842');
                 }}
-                className="px-2.5 py-1 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 border border-blue-500/30 text-xs font-bold transition-all cursor-pointer"
+                className="px-2.5 py-1 rounded-lg bg-brand-400/20 hover:bg-brand-400/30 text-brand-300 border border-brand-400/30 text-xs font-bold transition-all cursor-pointer"
                 title={isAr ? 'استخدام الرمز التجريبي الافتراضي' : 'Auto-fill Demo Code'}
               >
                 {isAr ? 'رمز تجريبي: 9842 ⚡' : 'Demo OTP: 9842 ⚡'}
@@ -841,14 +841,14 @@ export const SignUp: React.FC<SignUpProps> = ({
                 value={otpCode}
                 onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, ''))}
                 placeholder="9842"
-                className="flex-1 py-3 px-4 bg-slate-950 border border-slate-700 focus:border-blue-500 rounded-xl text-center text-xl font-mono tracking-widest text-white focus:outline-hidden"
+                className="flex-1 py-3 px-4 bg-slate-950 border border-slate-700 focus:border-brand-400 rounded-xl text-center text-xl font-mono tracking-widest text-white focus:outline-hidden"
               />
 
               <button
                 type="button"
                 onClick={() => handleVerifyOtp()}
                 disabled={isVerifyingOtp || !otpCode}
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl transition-all cursor-pointer disabled:opacity-50 shadow-md shadow-blue-600/30"
+                className="px-6 py-3 bg-brand-500 hover:bg-brand-400 text-white font-bold text-xs rounded-xl transition-all cursor-pointer disabled:opacity-50 shadow-md shadow-brand-500/30"
               >
                 {isVerifyingOtp ? (
                   <RotateCw className="w-4 h-4 animate-spin" />
@@ -866,7 +866,7 @@ export const SignUp: React.FC<SignUpProps> = ({
                 onClick={handleResendCode}
                 disabled={resendCountdown > 0}
                 className={`font-semibold cursor-pointer ${
-                  resendCountdown > 0 ? 'text-slate-500' : 'text-blue-400 hover:underline'
+                  resendCountdown > 0 ? 'text-slate-500' : 'text-brand-300 hover:underline'
                 }`}
               >
                 {resendCountdown > 0
@@ -904,7 +904,7 @@ export const SignUp: React.FC<SignUpProps> = ({
             <button
               type="button"
               onClick={handleContinueWithPendingState}
-              className="w-full flex-1 flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-emerald-600/30 transition-all hover:scale-[1.01] cursor-pointer"
+              className="w-full flex-1 flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-teal-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-teal-600/30 transition-all hover:scale-[1.01] cursor-pointer"
             >
               <CheckCircle2 className="w-4 h-4" />
               <span>
@@ -946,7 +946,7 @@ export const SignUp: React.FC<SignUpProps> = ({
             <button
               type="button"
               onClick={handleContinueWithPendingState}
-              className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow-md cursor-pointer"
+              className="px-6 py-2.5 bg-brand-500 hover:bg-brand-400 text-white font-bold text-xs rounded-xl shadow-md cursor-pointer"
             >
               {isAr ? 'الانتقال للوحة التحكم الآن' : 'Go to Dashboard Now'}
             </button>

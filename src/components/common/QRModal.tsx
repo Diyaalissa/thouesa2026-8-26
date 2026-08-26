@@ -94,7 +94,7 @@ export const QRModal: React.FC<QRModalProps> = ({
         </div>
 
         {/* Manifest & Flight Details */}
-        <div className="grid grid-cols-3 gap-2 bg-slate-100/70 p-3 rounded-lg text-xs text-slate-700 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 bg-slate-100/70 p-3 rounded-lg text-xs text-slate-700 mb-4">
           {manifestCode && (
             <div>
               <span className="text-slate-400 block">{isAr ? 'رمز المانيفست' : 'Manifest Code'}</span>
@@ -104,7 +104,7 @@ export const QRModal: React.FC<QRModalProps> = ({
           {flightNumber && (
             <div>
               <span className="text-slate-400 block">{isAr ? 'الرحلة' : 'Flight'}</span>
-              <span className="font-bold text-blue-700 flex items-center gap-1">
+              <span className="font-bold text-brand-600 flex items-center gap-1">
                 <Plane className="w-3 h-3" />
                 {flightNumber}
               </span>
@@ -130,7 +130,7 @@ export const QRModal: React.FC<QRModalProps> = ({
           />
           <button
             onClick={handleCopy}
-            className="flex items-center gap-1.5 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg shrink-0 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold rounded-lg shrink-0 transition-colors"
           >
             {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
             <span>{copied ? (isAr ? 'تم النسخ' : 'Copied') : isAr ? 'نسخ الرمز' : 'Copy'}</span>

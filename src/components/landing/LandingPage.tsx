@@ -82,12 +82,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
             backgroundImage: `url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=2000&q=80')`,
           }}
         />
-        <div className="absolute inset-0 z-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-blue-950/60 pointer-events-none" />
-        <div className="absolute top-0 right-0 -mt-12 -mr-12 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 -mb-12 -ml-12 w-96 h-96 bg-emerald-600/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-brand-950/60 pointer-events-none" />
+        <div className="absolute top-0 right-0 -mt-12 -mr-12 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 -mb-12 -ml-12 w-96 h-96 bg-teal-600/15 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-300 text-xs font-semibold mb-6 backdrop-blur-xs">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-400/20 border border-brand-400/30 text-brand-300 text-xs font-semibold mb-6 backdrop-blur-xs">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
             <span>{isAr ? 'ضمان مالي مشدد 100% ومراكز فحص معتمدة' : '100% Escrow Guarantee & Physical Hub Network'}</span>
           </div>
@@ -107,7 +107,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
           <div className="flex flex-wrap gap-3">
             <button
               onClick={handleSendNowClick}
-              className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-blue-600/40 transition-all hover:scale-105 cursor-pointer"
+              className="flex items-center gap-2 px-6 py-3 bg-brand-500 hover:bg-brand-400 text-white font-bold text-sm rounded-xl shadow-lg shadow-brand-500/40 transition-all hover:scale-105 cursor-pointer"
             >
               <PackagePlus className="w-4 h-4" />
               <span>{isAr ? 'أرسل طردك الآن (تسجيل / دخول)' : 'Send Now (Sign Up / Sign In)'}</span>
@@ -133,7 +133,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
         </div>
 
         {/* Live Metrics Strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-12 pt-8 border-t border-slate-800/80 text-xs relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12 pt-8 border-t border-slate-800/80 text-xs relative z-10">
           <div>
             <span className="text-slate-400 block">{isAr ? 'الضمان المالي المحجوز' : 'Active Escrow Locked'}</span>
             <span className="text-lg font-bold text-emerald-400">$680,000+</span>
@@ -144,7 +144,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
           </div>
           <div>
             <span className="text-slate-400 block">{isAr ? 'المسافرون الموثقون' : 'Verified Travelers'}</span>
-            <span className="text-lg font-bold text-blue-400">1,420+ مسافر</span>
+            <span className="text-lg font-bold text-brand-300">1,420+ مسافر</span>
           </div>
           <div>
             <span className="text-slate-400 block">{isAr ? 'نسبة تسليم الطرود الآمنة' : 'Safe Delivery Rate'}</span>
@@ -156,7 +156,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
       {/* 2. THE 3 CORE SERVICES CARDS */}
       <section className="space-y-6">
         <div className="text-center max-w-2xl mx-auto">
-          <span className="px-3 py-1 bg-blue-500/10 text-blue-400 border border-blue-500/30 rounded-full text-xs font-bold uppercase tracking-wider">
+          <span className="px-3 py-1 bg-brand-400/10 text-brand-300 border border-brand-400/30 rounded-full text-xs font-bold uppercase tracking-wider">
             {isAr ? 'خدمات المنصة الشاملة' : 'Core Logistics Services'}
           </span>
           <h3 className="text-2xl sm:text-3xl font-black text-slate-100 mt-2">
@@ -173,13 +173,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
           {/* Service 1: Send Package */}
           <div
             onClick={handleSendNowClick}
-            className="group relative bg-slate-900 border border-slate-800 hover:border-blue-500/60 rounded-3xl p-6 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10 cursor-pointer flex flex-col justify-between"
+            className="group relative bg-slate-900 border border-slate-800 hover:border-brand-400/60 rounded-3xl p-6 transition-all duration-300 hover:shadow-xl hover:shadow-brand-400/10 cursor-pointer flex flex-col justify-between"
           >
             <div>
-              <div className="w-12 h-12 rounded-2xl bg-blue-600/20 text-blue-400 border border-blue-500/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-2xl bg-brand-500/20 text-brand-300 border border-brand-400/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                 <Box className="w-6 h-6" />
               </div>
-              <span className="text-[11px] font-bold text-blue-400 uppercase tracking-wide">
+              <span className="text-[11px] font-bold text-brand-300 uppercase tracking-wide">
                 {isAr ? 'الخدمة الأولى' : 'Service #1'}
               </span>
               <h4 className="text-lg font-black text-white mt-1 mb-2">
@@ -191,7 +191,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
                   : 'Drop off items at your local hub. We inspect, weigh, and seal with cryptographic IDs before passenger dispatch.'}
               </p>
             </div>
-            <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-bold text-blue-400 group-hover:text-blue-300">
+            <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-bold text-brand-300 group-hover:text-brand-300">
               <span>{isAr ? 'ابدأ إرسال طرد' : 'Send Package'}</span>
               <ArrowIcon className="w-4 h-4 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
             </div>
@@ -200,13 +200,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
           {/* Service 2: Buy from International Stores */}
           <div
             onClick={handleSendNowClick}
-            className="group relative bg-slate-900 border border-slate-800 hover:border-indigo-500/60 rounded-3xl p-6 transition-all duration-300 hover:shadow-xl hover:shadow-indigo-500/10 cursor-pointer flex flex-col justify-between"
+            className="group relative bg-slate-900 border border-slate-800 hover:border-brand-500/60 rounded-3xl p-6 transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/10 cursor-pointer flex flex-col justify-between"
           >
             <div>
-              <div className="w-12 h-12 rounded-2xl bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-2xl bg-brand-600/20 text-brand-400 border border-brand-500/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                 <Globe2 className="w-6 h-6" />
               </div>
-              <span className="text-[11px] font-bold text-indigo-400 uppercase tracking-wide">
+              <span className="text-[11px] font-bold text-brand-400 uppercase tracking-wide">
                 {isAr ? 'الخدمة الثانية' : 'Service #2'}
               </span>
               <h4 className="text-lg font-black text-white mt-1 mb-2">
@@ -218,7 +218,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
                   : 'Paste product URLs from Amazon, Apple, AliExpress, or eBay. We handle purchasing, receiving, and direct transit.'}
               </p>
             </div>
-            <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-bold text-indigo-400 group-hover:text-indigo-300">
+            <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-bold text-brand-400 group-hover:text-brand-300">
               <span>{isAr ? 'طلب شراء من متجر عالمي' : 'Order Global Store Items'}</span>
               <ArrowIcon className="w-4 h-4 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
             </div>
@@ -230,7 +230,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
             className="group relative bg-slate-900 border border-slate-800 hover:border-emerald-500/60 rounded-3xl p-6 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 cursor-pointer flex flex-col justify-between"
           >
             <div>
-              <div className="w-12 h-12 rounded-2xl bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-2xl bg-teal-600/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                 <ShoppingBag className="w-6 h-6" />
               </div>
               <span className="text-[11px] font-bold text-emerald-400 uppercase tracking-wide">
@@ -256,7 +256,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
       {/* 2. Interactive Live Instant Shipping Calculator */}
       <section className="bg-white rounded-3xl p-6 md:p-10 border border-slate-200 shadow-sm">
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center">
             <Calculator className="w-5 h-5" />
           </div>
           <div>
@@ -275,7 +275,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
           {/* Inputs */}
           <div className="lg:col-span-2 space-y-5 text-xs text-slate-700">
             {/* Route Selection */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
               <div>
                 <label className="block font-semibold mb-1.5">{isAr ? 'بلد الانطلاق (فرع الشحن)' : 'Origin Hub'}</label>
                 <select
@@ -306,7 +306,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
             </div>
 
             {/* Category & Declared Value */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
               <div>
                 <label className="block font-semibold mb-1.5">{isAr ? 'نوع المحتويات' : 'Item Category'}</label>
                 <select
@@ -341,7 +341,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
             <div>
               <div className="flex justify-between items-center mb-1.5">
                 <label className="font-semibold">{isAr ? 'الوزن التقريبي (كغم)' : 'Estimated Weight (kg)'}</label>
-                <span className="font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">{weightKg} كغم</span>
+                <span className="font-bold text-brand-500 bg-brand-50 px-2 py-0.5 rounded-md">{weightKg} كغم</span>
               </div>
               <input
                 type="range"
@@ -350,11 +350,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
                 step="0.5"
                 value={weightKg}
                 onChange={(e) => setWeightKg(Number(e.target.value))}
-                className="w-full accent-blue-600"
+                className="w-full accent-brand-500"
               />
             </div>
 
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               <div>
                 <label className="block font-semibold text-slate-500 mb-1">{isAr ? 'الطول (سم)' : 'Length (cm)'}</label>
                 <input
@@ -390,7 +390,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
             <div>
               <div className="flex items-center justify-between pb-3 border-b border-slate-800 text-xs text-slate-400">
                 <span>{isAr ? 'التسعير التقديري' : 'Price Quotation'}</span>
-                <span className="font-semibold text-blue-400">
+                <span className="font-semibold text-brand-300">
                   {isAr ? 'الوزن المعتمد:' : 'Chargeable:'} {quote.chargeableWeightKg} kg
                 </span>
               </div>
@@ -420,7 +420,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
 
             <button
               onClick={() => onNavigate('SENDER')}
-              className="mt-6 w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-2"
+              className="mt-6 w-full py-3 bg-brand-500 hover:bg-brand-400 text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-2"
             >
               <span>{isAr ? 'متابعة وحجز الشحنة' : 'Book Shipment with Escrow'}</span>
               <ArrowIcon className="w-3.5 h-3.5" />
@@ -442,9 +442,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs relative">
-            <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-black mb-3">
+            <div className="w-10 h-10 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center font-black mb-3">
               1
             </div>
             <h4 className="font-bold text-slate-900 text-sm mb-1.5">
@@ -486,7 +486,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
           </div>
 
           <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs relative">
-            <div className="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-black mb-3">
+            <div className="w-10 h-10 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center font-black mb-3">
               4
             </div>
             <h4 className="font-bold text-slate-900 text-sm mb-1.5">
@@ -507,7 +507,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
         <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <Plane className="w-5 h-5 text-blue-600" />
+              <Plane className="w-5 h-5 text-brand-500" />
               <h4 className="font-bold text-slate-900 text-sm">
                 {isAr ? 'سعات الأمتعة المتاحة لرحلات المسافرين القادمة' : 'Verified Upcoming Traveler Routes'}
               </h4>
@@ -554,14 +554,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ locale, onNavigate, on
         <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <Building2 className="w-5 h-5 text-blue-600" />
+              <Building2 className="w-5 h-5 text-brand-500" />
               <h4 className="font-bold text-slate-900 text-sm">
                 {isAr ? 'شبكة مراكز الفحص والتخزين المعتمدة (Hubs)' : 'Certified Country Hub Network'}
               </h4>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 text-xs">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
             {HUBS_DATA.map((h) => (
               <div key={h.id} className="p-3 bg-slate-50 border border-slate-200 rounded-xl">
                 <div className="flex items-center justify-between mb-1">

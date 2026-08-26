@@ -31,7 +31,7 @@ export const ComplianceModal: React.FC<ComplianceModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-slate-800 bg-slate-950/80">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 border border-blue-500/30 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-brand-500/20 text-brand-300 border border-brand-400/30 flex items-center justify-center shrink-0">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
@@ -56,7 +56,7 @@ export const ComplianceModal: React.FC<ComplianceModalProps> = ({
           <button
             onClick={() => setActiveTab('CUSTOMS')}
             className={`pb-3 font-bold border-b-2 transition-colors cursor-pointer ${
-              activeTab === 'CUSTOMS' ? 'border-blue-500 text-blue-400' : 'border-transparent text-slate-400 hover:text-slate-200'
+              activeTab === 'CUSTOMS' ? 'border-brand-400 text-brand-300' : 'border-transparent text-slate-400 hover:text-slate-200'
             }`}
           >
             {isAr ? 'الإقرار الجمركي والشحن الجوي' : 'Customs Declaration'}
@@ -83,8 +83,8 @@ export const ComplianceModal: React.FC<ComplianceModalProps> = ({
         <div className="p-6 overflow-y-auto space-y-4 text-xs text-slate-300 leading-relaxed">
           {activeTab === 'CUSTOMS' && (
             <div className="space-y-4">
-              <div className="p-4 rounded-2xl bg-blue-950/40 border border-blue-500/30 text-blue-200">
-                <h4 className="font-bold text-sm text-blue-300 mb-1 flex items-center gap-2">
+              <div className="p-4 rounded-2xl bg-brand-950/40 border border-brand-400/30 text-brand-200">
+                <h4 className="font-bold text-sm text-brand-300 mb-1 flex items-center gap-2">
                   <Scale className="w-4 h-4" />
                   <span>{isAr ? 'إقرار العميل والمرسل القانوني:' : 'Sender Legal & Customs Warranty:'}</span>
                 </h4>
@@ -120,7 +120,7 @@ export const ComplianceModal: React.FC<ComplianceModalProps> = ({
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 text-xs">
                 <div className="p-3 bg-slate-800/80 rounded-xl border border-slate-700">
                   <span className="font-bold text-red-400 block mb-1">❌ {isAr ? 'المتفجرات والغازات والسوائل القابلة للاشتعال' : 'Explosives & Flammables'}</span>
                   <span className="text-slate-400 text-[11px]">{isAr ? 'العطور عالية التركيز بالكميات التجارية، الولاعات، الألعاب النارية.' : 'Commercial perfume batches, lighters, aerosols.'}</span>
@@ -174,7 +174,7 @@ export const ComplianceModal: React.FC<ComplianceModalProps> = ({
               type="checkbox"
               checked={agreed}
               onChange={(e) => setAgreed(e.target.checked)}
-              className="mt-0.5 w-4 h-4 rounded-md border-slate-700 bg-slate-800 text-blue-600 focus:ring-blue-500"
+              className="mt-0.5 w-4 h-4 rounded-md border-slate-700 bg-slate-800 text-brand-500 focus:ring-brand-400"
             />
             <span>
               {isAr
@@ -200,7 +200,7 @@ export const ComplianceModal: React.FC<ComplianceModalProps> = ({
                 }}
                 className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer w-full sm:w-auto flex items-center justify-center gap-2 ${
                   agreed
-                    ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30'
+                    ? 'bg-brand-500 hover:bg-brand-400 text-white shadow-lg shadow-brand-500/30'
                     : 'bg-slate-800 text-slate-500 cursor-not-allowed'
                 }`}
               >

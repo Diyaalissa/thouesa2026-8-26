@@ -1,0 +1,106 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+    
+    function isRole(role) {
+      return isAuthenticated() && getUserData().role == role;
+    }
+    
+    function isAnyRole(roles) {
+      return isAuthenticated() && getUserData().role in roles;
+    }
+    
+    function isStaff() {
+      return isAnyRole(['MASTER_ADMIN', 'EMPLOYEE', 'HUB_MANAGER', 'HUB_AGENT', 'HUB_INSPECTOR']);
+    }
+
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      allow update: if isAuthenticated() && (request.auth.uid == userId || isStaff());
+      allow delete: if isRole('MASTER_ADMIN');
+    }
+
+    match /employees/{employeeId} {
+      allow read: if isAuthenticated();
+      allow write: if isRole('MASTER_ADMIN');
+    }
+
+    match /hubs/{hubId} {
+      allow read: if true;
+      allow write: if isRole('MASTER_ADMIN');
+    }
+
+    match /shipments/{shipmentId} {
+      allow read: if isAuthenticated() && (resource.data.senderId == request.auth.uid || resource.data.assignedTravelerId == request.auth.uid || isStaff());
+      allow create: if isAuthenticated() && request.resource.data.senderId == request.auth.uid;
+      allow update: if isAuthenticated() && (resource.data.senderId == request.auth.uid || resource.data.assignedTravelerId == request.auth.uid || isStaff());
+      allow delete: if isRole('MASTER_ADMIN');
+    }
+
+    match /trips/{tripId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && request.resource.data.travelerId == request.auth.uid;
+      allow update: if isAuthenticated() && (resource.data.travelerId == request.auth.uid || isStaff());
+      allow delete: if isRole('MASTER_ADMIN');
+    }
+
+    match /manifests/{manifestId} {
+      allow read: if isAuthenticated() && (resource.data.travelerId == request.auth.uid || isStaff());
+      allow write: if isStaff();
+    }
+
+    match /escrow_wallets/{walletId} {
+      allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAnyRole(['MASTER_ADMIN', 'EMPLOYEE']));
+      allow write: if isAnyRole(['MASTER_ADMIN', 'EMPLOYEE']);
+    }
+
+    match /financial_transactions/{transactionId} {
+      allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAnyRole(['MASTER_ADMIN', 'EMPLOYEE']));
+      allow write: if isAnyRole(['MASTER_ADMIN', 'EMPLOYEE']);
+    }
+
+    match /audit_logs/{logId} {
+      allow read: if isRole('MASTER_ADMIN');
+      allow create: if isAuthenticated();
+      allow update, delete: if false;
+    }
+
+    match /disputes/{disputeId} {
+      allow read: if isAuthenticated() && (resource.data.claimantId == request.auth.uid || resource.data.respondentId == request.auth.uid || isAnyRole(['MASTER_ADMIN', 'EMPLOYEE', 'HUB_MANAGER']));
+      allow create: if isAuthenticated() && request.resource.data.claimantId == request.auth.uid;
+      allow update: if isAnyRole(['MASTER_ADMIN', 'EMPLOYEE', 'HUB_MANAGER']);
+      allow delete: if isRole('MASTER_ADMIN');
+    }
+
+    match /exchange_rates/{rateId} {
+      allow read: if true;
+      allow write: if isRole('MASTER_ADMIN');
+    }
+
+    match /route_pricing/{pricingId} {
+      allow read: if true;
+      allow write: if isRole('MASTER_ADMIN');
+    }
+
+    match /system_notifications/{notificationId} {
+      allow read: if isAuthenticated() && (
+        resource.data.targetUserId == request.auth.uid || 
+        resource.data.targetRole == getUserData().role || 
+        resource.data.targetRole == 'ALL' || 
+        resource.data.targetRole == 'PUBLIC'
+      );
+      allow create: if isStaff();
+      allow update: if isAuthenticated() && resource.data.targetUserId == request.auth.uid && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['isRead']);
+      allow delete: if isAuthenticated() && resource.data.targetUserId == request.auth.uid;
+    }
+  }
+}

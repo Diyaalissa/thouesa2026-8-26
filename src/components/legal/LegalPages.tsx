@@ -21,7 +21,7 @@ export const LegalPages: React.FC<LegalPagesProps> = ({
       {/* Header */}
       <div className="max-w-5xl mx-auto pb-6 border-b border-slate-800 flex flex-wrap items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs text-blue-400 font-bold uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-2 text-xs text-brand-300 font-bold uppercase tracking-wider mb-1">
             <Scale className="w-4 h-4" />
             <span>{isAr ? 'البوابة القانونية والتنظيمية لمنصة THOUESA' : 'THOUESA Legal & Regulatory Portal'}</span>
           </div>
@@ -54,7 +54,7 @@ export const LegalPages: React.FC<LegalPagesProps> = ({
             onClick={() => setCurrentPage('TERMS')}
             className={`w-full flex items-center justify-between p-3.5 rounded-2xl text-xs font-bold text-start transition-all cursor-pointer ${
               currentPage === 'TERMS'
-                ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30 ring-1 ring-blue-400'
+                ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/30 ring-1 ring-brand-300'
                 : 'bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800'
             }`}
           >
@@ -69,7 +69,7 @@ export const LegalPages: React.FC<LegalPagesProps> = ({
             onClick={() => setCurrentPage('CUSTOMS')}
             className={`w-full flex items-center justify-between p-3.5 rounded-2xl text-xs font-bold text-start transition-all cursor-pointer ${
               currentPage === 'CUSTOMS'
-                ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30 ring-1 ring-emerald-400'
+                ? 'bg-teal-600 text-white shadow-lg shadow-teal-600/30 ring-1 ring-emerald-400'
                 : 'bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800'
             }`}
           >
@@ -115,7 +115,7 @@ export const LegalPages: React.FC<LegalPagesProps> = ({
         <div className="md:col-span-3 bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 text-xs leading-relaxed space-y-6">
           {currentPage === 'TERMS' && (
             <div className="space-y-4">
-              <div className="flex items-center gap-2 pb-3 border-b border-slate-800 text-blue-400 font-bold text-sm">
+              <div className="flex items-center gap-2 pb-3 border-b border-slate-800 text-brand-300 font-bold text-sm">
                 <FileText className="w-5 h-5" />
                 <span>{isAr ? '1. شروط الخدمة والوساطة اللوجستية وعقد الضمان المالي المشفر' : '1. Terms of Service, Logistics Escrow & Smart Contract Rules'}</span>
               </div>
@@ -205,7 +205,7 @@ export const LegalPages: React.FC<LegalPagesProps> = ({
                   : 'The following items are strictly prohibited under international civil aviation safety rules (ICAO/IATA Dangerous Goods Regulations):'}
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 pt-2">
                 <div className="p-3 bg-red-950/20 border border-red-500/30 rounded-xl space-y-1">
                   <span className="font-bold text-red-300 block">{isAr ? '🚫 الأسلحة والمتفجرات والذخائر' : 'Weapons & Ammunition'}</span>
                   <span className="text-slate-400 text-[11px] block">{isAr ? 'الأسلحة النارية، الأسلحة البيضاء، الصواعق، الألعاب النارية، ومحاكيات السلاح.' : 'Firearms, ammunition, tactical gear, and explosives.'}</span>

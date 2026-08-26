@@ -260,7 +260,7 @@ export const HubPortal: React.FC<HubPortalProps> = ({
               setScannerPurpose('QUICK_LOOKUP');
               setScannerOpen(true);
             }}
-            className="flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl shadow-md transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 px-4 py-2 bg-brand-500 hover:bg-brand-400 text-white text-xs font-bold rounded-xl shadow-md transition-colors cursor-pointer"
           >
             <Scan className="w-4 h-4" />
             <span>{isAr ? 'ماسح الباركود / QR السريع' : 'Scan Customer QR / Barcode'}</span>
@@ -310,9 +310,9 @@ export const HubPortal: React.FC<HubPortalProps> = ({
               : 'text-slate-600 hover:text-slate-900'
           }`}
         >
-          <FileSpreadsheet className="w-4 h-4 text-blue-600" />
+          <FileSpreadsheet className="w-4 h-4 text-brand-500" />
           <span>{isAr ? '2. الطرود قيد الترحيل والمانيفست' : '2. Dispatched Manifests'}</span>
-          <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-[10px]">
+          <span className="w-5 h-5 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center text-[10px]">
             {readyForManifestShipments.length}
           </span>
         </button>
@@ -326,9 +326,9 @@ export const HubPortal: React.FC<HubPortalProps> = ({
               : 'text-slate-600 hover:text-slate-900'
           }`}
         >
-          <Plane className="w-4 h-4 text-indigo-600" />
+          <Plane className="w-4 h-4 text-brand-600" />
           <span>{isAr ? '3. الطرود في الرحلة الجوية / المطار' : '3. Flight & Airport Transit'}</span>
-          <span className="w-5 h-5 rounded-full bg-indigo-100 text-indigo-800 flex items-center justify-center text-[10px]">
+          <span className="w-5 h-5 rounded-full bg-brand-100 text-brand-800 flex items-center justify-center text-[10px]">
             {airportTransitShipments.length}
           </span>
         </button>
@@ -419,7 +419,7 @@ export const HubPortal: React.FC<HubPortalProps> = ({
                     <button
                       type="button"
                       onClick={() => setInspectedShipment(selectedShipmentForIntake)}
-                      className="px-3 py-1 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg text-xs font-bold transition-colors cursor-pointer"
+                      className="px-3 py-1 bg-brand-50 text-brand-600 hover:bg-brand-100 rounded-lg text-xs font-bold transition-colors cursor-pointer"
                     >
                       {isAr ? 'عرض تفاصيل الأصناف' : 'View Order Items'}
                     </button>
@@ -431,7 +431,7 @@ export const HubPortal: React.FC<HubPortalProps> = ({
                   <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
                     <div className="flex justify-between items-center mb-2">
                       <label className="font-bold text-slate-800 flex items-center gap-1.5">
-                        <Scale className="w-4 h-4 text-blue-600" />
+                        <Scale className="w-4 h-4 text-brand-500" />
                         <span>{isAr ? 'قراءة الميزان الرقمي المعتمد في الفرع (كغم):' : 'Certified Digital Scale Weight (kg):'}</span>
                       </label>
                       <span className="text-[11px] text-slate-500">
@@ -445,12 +445,12 @@ export const HubPortal: React.FC<HubPortalProps> = ({
                         step="0.05"
                         value={scaleActualWeightKg}
                         onChange={(e) => setScaleActualWeightKg(Number(e.target.value))}
-                        className="w-36 p-2.5 bg-white border border-slate-300 rounded-xl font-black text-lg text-blue-700 text-center"
+                        className="w-36 p-2.5 bg-white border border-slate-300 rounded-xl font-black text-lg text-brand-600 text-center"
                       />
                       <span className="font-bold text-slate-700">كغم (kg)</span>
 
                       {Math.abs(scaleActualWeightKg - selectedShipmentForIntake.estimatedWeightKg) > 0.3 && (
-                        <div className="flex items-center gap-1 text-[11px] font-bold text-orange-700 bg-orange-100 px-2.5 py-1 rounded-lg">
+                        <div className="flex items-center gap-1 text-[11px] font-bold text-brand-700 bg-brand-100 px-2.5 py-1 rounded-lg">
                           <AlertTriangle className="w-3.5 h-3.5" />
                           <span>{isAr ? 'يوجد فارق وزن سيتم إشعار العميل به آلياً' : 'Weight discrepancy will trigger approval'}</span>
                         </div>
@@ -461,7 +461,7 @@ export const HubPortal: React.FC<HubPortalProps> = ({
                   {/* Serialized Tamper-Evident Seal ID */}
                   <div>
                     <label className="block font-bold text-slate-800 mb-1 flex items-center gap-1.5">
-                      <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                      <ShieldCheck className="w-4 h-4 text-teal-600" />
                       <span>{isAr ? 'رقم شريط الختم الأمني المشفر (Seal ID):' : 'Tamper-Evident Seal ID:'}</span>
                     </label>
                     <input
@@ -543,7 +543,7 @@ export const HubPortal: React.FC<HubPortalProps> = ({
                   {isAr ? 'لا توجد طرود مفحوصة جاهزة للمانيفست حالياً' : 'No inspected parcels ready for manifest'}
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3">
                   {readyForManifestShipments.map((shipment) => {
                     const isChecked = selectedShipmentIdsForManifest.includes(shipment.id);
                     return (
@@ -555,14 +555,14 @@ export const HubPortal: React.FC<HubPortalProps> = ({
                           );
                         }}
                         className={`p-3.5 rounded-xl border cursor-pointer transition-all flex items-start gap-3 ${
-                          isChecked ? 'bg-blue-50/80 border-blue-500 ring-1 ring-blue-500' : 'bg-slate-50 border-slate-200'
+                          isChecked ? 'bg-brand-50/80 border-brand-400 ring-1 ring-brand-400' : 'bg-slate-50 border-slate-200'
                         }`}
                       >
                         <input
                           type="checkbox"
                           checked={isChecked}
                           readOnly
-                          className="mt-0.5 w-4 h-4 text-blue-600 rounded-sm"
+                          className="mt-0.5 w-4 h-4 text-brand-500 rounded-sm"
                         />
                         <div className="flex-1 text-xs">
                           <div className="flex justify-between font-bold text-slate-900 mb-1">
@@ -584,7 +584,7 @@ export const HubPortal: React.FC<HubPortalProps> = ({
             <button
               type="submit"
               disabled={isSubmittingManifest || selectedShipmentIdsForManifest.length === 0}
-              className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-bold rounded-xl text-xs shadow-md transition-colors cursor-pointer"
+              className="w-full py-3 bg-brand-500 hover:bg-brand-600 disabled:opacity-50 text-white font-bold rounded-xl text-xs shadow-md transition-colors cursor-pointer"
             >
               {isSubmittingManifest ? (isAr ? 'جارِ إنشاء المانيفست...' : 'Building Manifest...') : (isAr ? 'إصدار المانيفست المشفر وتوليد رمز التسليم' : 'Generate Secure Manifest')}
             </button>
@@ -621,7 +621,7 @@ export const HubPortal: React.FC<HubPortalProps> = ({
               <tbody className="divide-y divide-slate-100 text-slate-800">
                 {airportTransitShipments.map((s) => (
                   <tr key={s.id} className="hover:bg-slate-50">
-                    <td className="p-3 font-mono font-bold text-blue-600">{s.trackingNumber}</td>
+                    <td className="p-3 font-mono font-bold text-brand-500">{s.trackingNumber}</td>
                     <td className="p-3 font-medium">{s.itemDescription}</td>
                     <td className="p-3">
                       <div className="font-bold text-slate-900">{s.assignedTravelerName || 'يوسف القاضي'}</div>
@@ -719,10 +719,10 @@ export const HubPortal: React.FC<HubPortalProps> = ({
             <div className="flex items-center justify-between pb-3 border-b border-slate-800">
               <div>
                 <h3 className="text-base font-black text-white flex items-center gap-2">
-                  <Box className="w-5 h-5 text-blue-400" />
+                  <Box className="w-5 h-5 text-brand-300" />
                   <span>{isAr ? 'بيانات العميل وتفاصيل الأصناف والأسعار' : 'Customer & Order Breakdown'}</span>
                 </h3>
-                <span className="font-mono text-xs text-blue-400">{inspectedShipment.trackingNumber}</span>
+                <span className="font-mono text-xs text-brand-300">{inspectedShipment.trackingNumber}</span>
               </div>
               <button
                 onClick={() => setInspectedShipment(null)}
@@ -733,7 +733,7 @@ export const HubPortal: React.FC<HubPortalProps> = ({
             </div>
 
             {/* Customer & Recipient Info */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 text-xs">
               <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
                 <span className="text-slate-400 block mb-1">{isAr ? 'بيانات المرسل / صاحب الطلب:' : 'Sender Info:'}</span>
                 <p className="font-bold text-white">{inspectedShipment.senderName}</p>
@@ -787,7 +787,7 @@ export const HubPortal: React.FC<HubPortalProps> = ({
             <div className="flex justify-end pt-2">
               <button
                 onClick={() => setInspectedShipment(null)}
-                className="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs cursor-pointer"
+                className="px-5 py-2 bg-brand-500 hover:bg-brand-400 text-white font-bold rounded-xl text-xs cursor-pointer"
               >
                 {isAr ? 'إغلاق' : 'Close'}
               </button>

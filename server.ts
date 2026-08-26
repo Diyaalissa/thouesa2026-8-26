@@ -10,6 +10,8 @@ import { adminRouter } from './server/routes/admin';
 import { cronRouter } from './server/routes/cron';
 import { manifestsRouter } from './server/routes/manifests';
 import { usersRouter } from './server/routes/users';
+import { notificationsRouter } from './server/routes/notifications';
+import { ratesRouter } from './server/routes/rates';
 
 async function startServer() {
   const app = express();
@@ -40,6 +42,8 @@ async function startServer() {
   app.use('/api/escrow', escrowRouter);
   app.use('/api/admin', adminRouter);
   app.use('/api/cron', cronRouter);
+  app.use('/api/notifications', notificationsRouter);
+  app.use('/api/rates', ratesRouter);
 
   // Catch-all 404 for unhandled API routes (ensures JSON response instead of HTML)
   app.all('/api/*', (req, res) => {

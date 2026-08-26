@@ -34,7 +34,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, locale = 'ar',
 
     case 'RECEIVED_AT_ORIGIN':
       label = locale === 'ar' ? 'مستلم بمركز الانطلاق' : 'Received at Origin Hub';
-      colorClasses = 'bg-blue-50 text-blue-800 border-blue-300';
+      colorClasses = 'bg-brand-50 text-brand-700 border-brand-300';
       Icon = Box;
       break;
 
@@ -46,20 +46,20 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, locale = 'ar',
 
     case 'WEIGHT_DISCREPANCY_PENDING':
       label = locale === 'ar' ? 'مراجعة فرق الوزن' : 'Weight Discrepancy';
-      colorClasses = 'bg-orange-50 text-orange-800 border-orange-300';
+      colorClasses = 'bg-brand-50 text-brand-800 border-brand-300';
       Icon = AlertTriangle;
       break;
 
     case 'ASSIGNED_TO_TRIP':
       label = locale === 'ar' ? 'مجدول مع مسافر' : 'Assigned to Traveler';
-      colorClasses = 'bg-indigo-50 text-indigo-800 border-indigo-300';
+      colorClasses = 'bg-brand-50 text-brand-800 border-brand-300';
       Icon = Plane;
       break;
 
     case 'IN_TRANSIT':
     case 'IN_FLIGHT':
       label = locale === 'ar' ? 'في مسار الرحلة الجوية' : 'In Flight Transit';
-      colorClasses = 'bg-blue-600 text-white border-blue-700 shadow-xs';
+      colorClasses = 'bg-brand-500 text-white border-brand-600 shadow-xs';
       Icon = Plane;
       break;
 
@@ -78,7 +78,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, locale = 'ar',
     case 'DELIVERED':
     case 'COMPLETED':
       label = locale === 'ar' ? 'تم التسليم بنجاح' : 'Delivered & Completed';
-      colorClasses = 'bg-emerald-600 text-white border-emerald-700';
+      colorClasses = 'bg-teal-600 text-white border-emerald-700';
       Icon = CheckCircle2;
       break;
 

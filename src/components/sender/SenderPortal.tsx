@@ -34,6 +34,7 @@ import { StatusBadge } from '../common/StatusBadge';
 import { WaybillModal } from '../common/WaybillModal';
 import { AgentChatModal } from '../common/AgentChatModal';
 import { ComplianceModal } from '../legal/ComplianceModal';
+import { TrackingTimeline } from '../tracking/TrackingTimeline';
 import { formatCurrency } from '../../lib/crypto';
 import { HUBS_DATA } from '../../lib/constants';
 
@@ -313,7 +314,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs font-bold">
+              <span className="px-2.5 py-0.5 rounded-full bg-brand-400/20 text-brand-300 border border-brand-400/30 text-xs font-bold">
                 {isAr ? 'لوحة تحكم العميل' : 'Client Terminal'}
               </span>
             </div>
@@ -331,7 +332,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
             onClick={() => setActiveTab('MY_SHIPMENTS')}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'MY_SHIPMENTS'
-                ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
+                ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/30'
                 : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700'
             }`}
           >
@@ -349,16 +350,16 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
             onClick={() => setActiveTab('SEND_PARCEL')}
             className={`p-5 rounded-2xl border text-start transition-all cursor-pointer flex flex-col justify-between ${
               activeTab === 'SEND_PARCEL'
-                ? 'bg-blue-600/20 border-blue-500 ring-2 ring-blue-500/30'
+                ? 'bg-brand-500/20 border-brand-400 ring-2 ring-brand-400/30'
                 : 'bg-slate-950/60 border-slate-800 hover:border-slate-700 hover:bg-slate-800/40'
             }`}
           >
             <div>
               <div className="flex items-center justify-between mb-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 border border-blue-500/30 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-brand-500/20 text-brand-300 border border-brand-400/30 flex items-center justify-center">
                   <Box className="w-5 h-5" />
                 </div>
-                <span className="text-[10px] font-bold text-blue-400 uppercase tracking-wider">
+                <span className="text-[10px] font-bold text-brand-300 uppercase tracking-wider">
                   {isAr ? 'الخيار الأول' : 'Option #1'}
                 </span>
               </div>
@@ -371,7 +372,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                   : 'Drop off personal items at your local hub for physical inspection and traveler dispatch.'}
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs font-bold text-blue-400">
+            <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs font-bold text-brand-300">
               <span>{isAr ? 'بدء إرسال طرد' : 'Send Package'}</span>
               <ArrowIcon className="w-3.5 h-3.5" />
             </div>
@@ -383,16 +384,16 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
             onClick={() => setActiveTab('INTERNATIONAL_BUY')}
             className={`p-5 rounded-2xl border text-start transition-all cursor-pointer flex flex-col justify-between ${
               activeTab === 'INTERNATIONAL_BUY'
-                ? 'bg-indigo-600/20 border-indigo-500 ring-2 ring-indigo-500/30'
+                ? 'bg-brand-600/20 border-brand-500 ring-2 ring-brand-500/30'
                 : 'bg-slate-950/60 border-slate-800 hover:border-slate-700 hover:bg-slate-800/40'
             }`}
           >
             <div>
               <div className="flex items-center justify-between mb-3">
-                <div className="w-10 h-10 rounded-xl bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-brand-600/20 text-brand-400 border border-brand-500/30 flex items-center justify-center">
                   <Globe2 className="w-5 h-5" />
                 </div>
-                <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-wider">
+                <span className="text-[10px] font-bold text-brand-400 uppercase tracking-wider">
                   {isAr ? 'الخيار الثاني' : 'Option #2'}
                 </span>
               </div>
@@ -405,7 +406,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                   : 'Source products from Amazon, Apple, AliExpress, eBay, etc. with full escrow protection.'}
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs font-bold text-indigo-400">
+            <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs font-bold text-brand-400">
               <span>{isAr ? 'طلب شراء من متجر' : 'Order Global Items'}</span>
               <ArrowIcon className="w-3.5 h-3.5" />
             </div>
@@ -417,13 +418,13 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
             onClick={() => setActiveTab('SPECIFIC_COUNTRY_BUY')}
             className={`p-5 rounded-2xl border text-start transition-all cursor-pointer flex flex-col justify-between ${
               activeTab === 'SPECIFIC_COUNTRY_BUY'
-                ? 'bg-emerald-600/20 border-emerald-500 ring-2 ring-emerald-500/30'
+                ? 'bg-teal-600/20 border-emerald-500 ring-2 ring-emerald-500/30'
                 : 'bg-slate-950/60 border-slate-800 hover:border-slate-700 hover:bg-slate-800/40'
             }`}
           >
             <div>
               <div className="flex items-center justify-between mb-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-teal-600/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
                   <ShoppingBag className="w-5 h-5" />
                 </div>
                 <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">
@@ -452,7 +453,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
         <form onSubmit={handleSendParcelSubmit} className="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 text-white shadow-xl max-w-4xl mx-auto space-y-6">
           <div className="border-b border-slate-800 pb-4">
             <h3 className="text-lg font-black text-white flex items-center gap-2">
-              <Box className="w-5 h-5 text-blue-400" />
+              <Box className="w-5 h-5 text-brand-300" />
               <span>{isAr ? 'الخيار الأول: نموذج إرسال طرد شخصي وأمانات' : 'Option 1: Send Personal Parcel'}</span>
             </h3>
             <p className="text-xs text-slate-400 mt-1">
@@ -460,13 +461,13 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1">{isAr ? 'مركز الانطلاق (لتسليم الطرد)' : 'Origin Hub'}</label>
               <select
                 value={originHubId}
                 onChange={(e) => setOriginHubId(e.target.value)}
-                className="w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-hidden focus:border-blue-500"
+                className="w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-hidden focus:border-brand-400"
               >
                 {HUBS_DATA.map((h) => (
                   <option key={h.id} value={h.id}>
@@ -481,7 +482,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
               <select
                 value={destHubId}
                 onChange={(e) => setDestHubId(e.target.value)}
-                className="w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-hidden focus:border-blue-500"
+                className="w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-hidden focus:border-brand-400"
               >
                 {HUBS_DATA.map((h) => (
                   <option key={h.id} value={h.id}>
@@ -492,7 +493,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1">{isAr ? 'اسم المستلم الثلاثي' : 'Recipient Name'}</label>
               <input
@@ -526,7 +527,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1">{isAr ? 'تصنيف المحتوى' : 'Item Category'}</label>
               <select
@@ -560,7 +561,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1">{isAr ? 'القيمة المصرح بها ($ لتحديد الضمان المسترد)' : 'Declared Value ($)'}</label>
               <input
@@ -608,13 +609,13 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 text-xs">
               <button
                 type="button"
                 onClick={() => setSelectedPaymentGateway('CLIQ_JOR')}
                 className={`p-2.5 rounded-xl border text-center font-bold transition-all cursor-pointer ${
                   selectedPaymentGateway === 'CLIQ_JOR'
-                    ? 'bg-blue-600/30 border-blue-500 text-white ring-1 ring-blue-500'
+                    ? 'bg-brand-500/30 border-brand-400 text-white ring-1 ring-brand-400'
                     : 'bg-slate-900 border-slate-800 text-slate-400 hover:bg-slate-800'
                 }`}
               >
@@ -636,7 +637,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                 onClick={() => setSelectedPaymentGateway('CIB_DZA')}
                 className={`p-2.5 rounded-xl border text-center font-bold transition-all cursor-pointer ${
                   selectedPaymentGateway === 'CIB_DZA'
-                    ? 'bg-emerald-600/30 border-emerald-500 text-white ring-1 ring-emerald-500'
+                    ? 'bg-teal-600/30 border-emerald-500 text-white ring-1 ring-emerald-500'
                     : 'bg-slate-900 border-slate-800 text-slate-400 hover:bg-slate-800'
                 }`}
               >
@@ -663,7 +664,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                 type="checkbox"
                 checked={prohibitedAgreed}
                 onChange={(e) => setProhibitedAgreed(e.target.checked)}
-                className="mt-0.5 w-4 h-4 text-blue-600 rounded-sm"
+                className="mt-0.5 w-4 h-4 text-brand-500 rounded-sm"
               />
               <span className="text-xs text-slate-300 leading-relaxed">
                 {isAr
@@ -671,7 +672,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                   : 'I certify that this package is subject to certified physical hub screening and contains no hazardous or prohibited materials.'}
               </span>
             </label>
-            <div className="flex items-center gap-3 pt-1 text-[11px] text-blue-400">
+            <div className="flex items-center gap-3 pt-1 text-[11px] text-brand-300">
               <button
                 type="button"
                 onClick={() => {
@@ -721,7 +722,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs shadow-lg shadow-blue-600/30 cursor-pointer disabled:opacity-50"
+              className="flex items-center gap-2 px-6 py-2.5 bg-brand-500 hover:bg-brand-400 text-white font-bold rounded-xl text-xs shadow-lg shadow-brand-500/30 cursor-pointer disabled:opacity-50"
             >
               <CheckCircle2 className="w-4 h-4" />
               <span>{isSubmitting ? (isAr ? 'جاري الإنشاء...' : 'Creating...') : (isAr ? 'إنشاء وإصدار بوليصة الطرد' : 'Create & Issue Waybill')}</span>
@@ -735,7 +736,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
         <form onSubmit={handleStoreBuySubmit} className="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 text-white shadow-xl max-w-4xl mx-auto space-y-6">
           <div className="border-b border-slate-800 pb-4">
             <h3 className="text-lg font-black text-white flex items-center gap-2">
-              <Globe2 className="w-5 h-5 text-indigo-400" />
+              <Globe2 className="w-5 h-5 text-brand-400" />
               <span>{isAr ? 'الخيار الثاني: الشراء من المتاجر العالمية (Amazon, Apple, eBay...)' : 'Option 2: Buy from Global Stores'}</span>
             </h3>
             <p className="text-xs text-slate-400 mt-1">
@@ -745,7 +746,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1">{isAr ? 'المتجر العالمي المصدر' : 'Global Store'}</label>
               <select
@@ -781,13 +782,13 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
           {/* Items Table / Form */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold text-indigo-400 uppercase tracking-wide">
+              <label className="text-xs font-bold text-brand-400 uppercase tracking-wide">
                 {isAr ? 'المنتجات والكميات والأسعار المطلوبة:' : 'Requested Items, Quantities & Prices:'}
               </label>
               <button
                 type="button"
                 onClick={addStoreItem}
-                className="flex items-center gap-1 text-xs font-bold text-indigo-400 hover:text-indigo-300 bg-indigo-500/10 px-3 py-1 rounded-lg border border-indigo-500/30 cursor-pointer"
+                className="flex items-center gap-1 text-xs font-bold text-brand-400 hover:text-brand-300 bg-brand-500/10 px-3 py-1 rounded-lg border border-brand-500/30 cursor-pointer"
               >
                 <PlusCircle className="w-3.5 h-3.5" />
                 <span>{isAr ? 'إضافة منتج آخر' : 'Add Item'}</span>
@@ -809,7 +810,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3">
                   <div>
                     <input
                       type="text"
@@ -831,7 +832,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                   <div>
                     <label className="block text-[10px] text-slate-400 mb-1">{isAr ? 'الكمية' : 'Qty'}</label>
                     <input
@@ -874,8 +875,8 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
             ))}
 
             {/* Total Cost Banner */}
-            <div className="p-4 bg-indigo-950/40 border border-indigo-500/30 rounded-2xl flex items-center justify-between text-xs">
-              <span className="font-bold text-indigo-200">
+            <div className="p-4 bg-brand-950/40 border border-brand-500/30 rounded-2xl flex items-center justify-between text-xs">
+              <span className="font-bold text-brand-200">
                 {isAr ? 'إجمالي قيمة المشتريات المصرح بها:' : 'Total Items Declared Cost:'}
               </span>
               <span className="text-base font-black text-emerald-400">
@@ -895,7 +896,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex items-center gap-2 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow-lg shadow-indigo-600/30 cursor-pointer disabled:opacity-50"
+              className="flex items-center gap-2 px-6 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-xs shadow-lg shadow-brand-600/30 cursor-pointer disabled:opacity-50"
             >
               <CheckCircle2 className="w-4 h-4" />
               <span>{isSubmitting ? (isAr ? 'جاري الإرسال...' : 'Submitting...') : (isAr ? 'تأكيد طلب الشراء الدولي' : 'Confirm Global Purchase')}</span>
@@ -919,7 +920,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1">{isAr ? 'الدولة المستهدفة للشراء' : 'Source Country'}</label>
               <select
@@ -990,7 +991,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                   />
                 </div>
 
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                   <div>
                     <label className="block text-[10px] text-slate-400 mb-1">{isAr ? 'الكمية المطلوبة' : 'Quantity'}</label>
                     <input
@@ -1054,7 +1055,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex items-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs shadow-lg shadow-emerald-600/30 cursor-pointer disabled:opacity-50"
+              className="flex items-center gap-2 px-6 py-2.5 bg-teal-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs shadow-lg shadow-teal-600/30 cursor-pointer disabled:opacity-50"
             >
               <CheckCircle2 className="w-4 h-4" />
               <span>{isSubmitting ? (isAr ? 'جاري الإرسال...' : 'Submitting...') : (isAr ? 'تأكيد طلب الشراء والشحن' : 'Confirm Country Sourcing')}</span>
@@ -1076,7 +1077,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                 onClick={() => setSelectedServiceFilter('ALL')}
                 className={`px-3 py-1.5 rounded-xl font-bold transition-colors cursor-pointer ${
                   selectedServiceFilter === 'ALL'
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-brand-500 text-white'
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                 }`}
               >
@@ -1086,7 +1087,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                 onClick={() => setSelectedServiceFilter('SEND_PARCEL')}
                 className={`px-3 py-1.5 rounded-xl font-bold transition-colors cursor-pointer ${
                   selectedServiceFilter === 'SEND_PARCEL'
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-brand-500 text-white'
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                 }`}
               >
@@ -1096,7 +1097,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                 onClick={() => setSelectedServiceFilter('INTERNATIONAL_BUY')}
                 className={`px-3 py-1.5 rounded-xl font-bold transition-colors cursor-pointer ${
                   selectedServiceFilter === 'INTERNATIONAL_BUY'
-                    ? 'bg-indigo-600 text-white'
+                    ? 'bg-brand-600 text-white'
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                 }`}
               >
@@ -1106,7 +1107,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                 onClick={() => setSelectedServiceFilter('SPECIFIC_COUNTRY_BUY')}
                 className={`px-3 py-1.5 rounded-xl font-bold transition-colors cursor-pointer ${
                   selectedServiceFilter === 'SPECIFIC_COUNTRY_BUY'
-                    ? 'bg-emerald-600 text-white'
+                    ? 'bg-teal-600 text-white'
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                 }`}
               >
@@ -1138,18 +1139,18 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                       onClick={() => setSelectedShipment(s)}
                       className={`p-4 rounded-2xl border cursor-pointer transition-all ${
                         isSelected
-                          ? 'bg-blue-950/60 border-blue-500 ring-2 ring-blue-500/20 shadow-lg'
+                          ? 'bg-brand-950/60 border-brand-400 ring-2 ring-brand-400/20 shadow-lg'
                           : 'bg-slate-900 border-slate-800 hover:border-slate-700'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <span className="font-mono font-bold text-xs text-blue-400">{s.trackingNumber}</span>
+                        <span className="font-mono font-bold text-xs text-brand-300">{s.trackingNumber}</span>
                         <StatusBadge status={s.currentStatus} locale={locale} size="sm" />
                       </div>
 
                       <div className="flex items-center gap-1.5 mb-1.5">
                         {s.serviceType === 'INTERNATIONAL_BUY' && (
-                          <span className="px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 text-[10px] font-bold">
+                          <span className="px-2 py-0.5 rounded-md bg-brand-500/20 text-brand-400 border border-brand-500/30 text-[10px] font-bold">
                             {isAr ? 'متجر عالمي' : 'Global Store'}
                           </span>
                         )}
@@ -1159,7 +1160,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                           </span>
                         )}
                         {(!s.serviceType || s.serviceType === 'SEND_PARCEL') && (
-                          <span className="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] font-bold">
+                          <span className="px-2 py-0.5 rounded-md bg-brand-400/20 text-brand-300 border border-brand-400/30 text-[10px] font-bold">
                             {isAr ? 'طرد شخصي' : 'Parcel'}
                           </span>
                         )}
@@ -1211,12 +1212,12 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                         onClick={() => setWaybillModalShipment(selectedShipment)}
                         className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition-colors cursor-pointer"
                       >
-                        <FileText className="w-3.5 h-3.5 text-blue-400" />
+                        <FileText className="w-3.5 h-3.5 text-brand-300" />
                         <span>{isAr ? 'عرض البوليصة' : 'Waybill'}</span>
                       </button>
                       <button
                         onClick={() => setChatModalOpen(true)}
-                        className="flex items-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl shadow-xs transition-colors cursor-pointer"
+                        className="flex items-center gap-1.5 px-3.5 py-2 bg-brand-500 hover:bg-brand-400 text-white text-xs font-bold rounded-xl shadow-xs transition-colors cursor-pointer"
                       >
                         <MessageSquare className="w-3.5 h-3.5" />
                         <span>{isAr ? 'محادثة الفرع' : 'Chat Hub'}</span>
@@ -1224,11 +1225,18 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                     </div>
                   </div>
 
+                  {/* Visual Tracking Timeline (DHL/Aramex Stepper) */}
+                  <TrackingTimeline
+                    shipment={selectedShipment}
+                    locale={locale}
+                    onOpenWaybill={(s) => setWaybillModalShipment(s)}
+                  />
+
                   {/* ITEM DETAILS, QUANTITIES, AND PRICES TABLE */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                        <Tag className="w-3.5 h-3.5 text-blue-400" />
+                        <Tag className="w-3.5 h-3.5 text-brand-300" />
                         <span>{isAr ? 'تفاصيل المنتجات والكميات والأسعار المسجلة:' : 'Order Items, Quantities & Prices Breakdown:'}</span>
                       </h4>
                     </div>
@@ -1257,7 +1265,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                                       href={item.storeUrl}
                                       target="_blank"
                                       rel="noreferrer"
-                                      className="text-[10px] text-blue-400 hover:underline flex items-center gap-1 mt-0.5"
+                                      className="text-[10px] text-brand-300 hover:underline flex items-center gap-1 mt-0.5"
                                     >
                                       <span>{isAr ? 'رابط المتجر' : 'Store Link'}</span>
                                       <ExternalLink className="w-2.5 h-2.5" />
@@ -1287,7 +1295,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                               <td colSpan={3} className="p-3 text-end text-slate-300">
                                 {isAr ? 'أجرة الشحن والمناولة والفحص بالفرع:' : 'Shipping, Handling & Inspection Fee:'}
                               </td>
-                              <td className="p-3 text-end text-blue-400 font-black text-sm">
+                              <td className="p-3 text-end text-brand-300 font-black text-sm">
                                 {formatCurrency(selectedShipment.shippingCost, selectedShipment.currency || 'USD')}
                               </td>
                             </tr>
@@ -1325,7 +1333,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                       <div className="flex gap-2 pt-1">
                         <button
                           onClick={() => onApproveWeightDiscrepancy(selectedShipment.id, 'APPROVE')}
-                          className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs transition-colors cursor-pointer flex items-center gap-1.5 shadow-md shadow-emerald-600/20"
+                          className="px-4 py-2 bg-teal-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs transition-colors cursor-pointer flex items-center gap-1.5 shadow-md shadow-teal-600/20"
                         >
                           <CheckCircle2 className="w-3.5 h-3.5" />
                           <span>{isAr ? `موافقة وسداد الفرق ($${selectedShipment.weightDiscrepancy.priceDelta})` : 'Approve & Pay Difference'}</span>
@@ -1346,7 +1354,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                       {isAr ? 'سلسلة العهدة والأمان المباشرة:' : 'Custody & Security Tracking:'}
                     </h4>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 text-xs">
                       <div className="p-3 bg-slate-950 border border-slate-800 rounded-xl">
                         <span className="text-slate-500 block text-[11px] mb-1">{isAr ? 'الختم الأمني المشفر' : 'Tamper-Evident Seal ID'}</span>
                         <span className="font-mono font-bold text-amber-400">
@@ -1356,7 +1364,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
 
                       <div className="p-3 bg-slate-950 border border-slate-800 rounded-xl">
                         <span className="text-slate-500 block text-[11px] mb-1">{isAr ? 'المسافر المعتمد المعين' : 'Assigned Traveler'}</span>
-                        <span className="font-bold text-blue-400">
+                        <span className="font-bold text-brand-300">
                           {selectedShipment.assignedTravelerName ? (
                             `${selectedShipment.assignedTravelerName} (${selectedShipment.airline || 'رحلة جوية'})`
                           ) : (
@@ -1369,7 +1377,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                 </div>
               ) : (
                 <div className="bg-slate-900 rounded-3xl p-12 border border-slate-800 text-center text-slate-500">
-                  <Box className="w-12 h-12 mx-auto mb-3 opacity-30 text-blue-400" />
+                  <Box className="w-12 h-12 mx-auto mb-3 opacity-30 text-brand-300" />
                   <p className="text-xs">{isAr ? 'اختر شحنة من القائمة لعرض تفاصيلها وأسعارها' : 'Select an order to view full details'}</p>
                 </div>
               )}

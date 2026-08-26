@@ -71,7 +71,7 @@ export const AgentChatModal: React.FC<AgentChatModalProps> = ({
         {/* Chat Header */}
         <div className="bg-slate-900 text-white p-4 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white relative">
+            <div className="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center font-bold text-white relative">
               <span>ع</span>
               <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full absolute bottom-0 right-0 border-2 border-slate-900" />
             </div>
@@ -101,14 +101,14 @@ export const AgentChatModal: React.FC<AgentChatModalProps> = ({
               <div
                 className={`max-w-[80%] rounded-2xl p-3 shadow-xs ${
                   m.sender === 'user'
-                    ? 'bg-blue-600 text-white rounded-br-none'
+                    ? 'bg-brand-500 text-white rounded-br-none'
                     : 'bg-white text-slate-800 border border-slate-200 rounded-bl-none'
                 }`}
               >
                 <p className="leading-relaxed">{m.text}</p>
                 <div
                   className={`flex items-center justify-end gap-1 mt-1 text-[10px] ${
-                    m.sender === 'user' ? 'text-blue-100' : 'text-slate-400'
+                    m.sender === 'user' ? 'text-brand-100' : 'text-slate-400'
                   }`}
                 >
                   <span>{m.time}</span>
@@ -126,12 +126,12 @@ export const AgentChatModal: React.FC<AgentChatModalProps> = ({
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             placeholder={isAr ? 'اكتب رسالتك لموظف الفرع...' : 'Type your message to the agent...'}
-            className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+            className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-brand-400"
           />
           <button
             type="submit"
             disabled={!inputText.trim()}
-            className="p-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-xl transition-colors shrink-0"
+            className="p-2.5 bg-brand-500 hover:bg-brand-600 disabled:opacity-50 text-white rounded-xl transition-colors shrink-0"
           >
             <Send className="w-4 h-4" />
           </button>

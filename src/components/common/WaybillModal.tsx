@@ -47,7 +47,7 @@ export const WaybillModal: React.FC<WaybillModalProps> = ({
           <div className="flex items-center justify-between border-b border-slate-300 pb-4 mb-4">
             <div>
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-black text-sm">
+                <div className="w-8 h-8 rounded-lg bg-brand-500 text-white flex items-center justify-center font-black text-sm">
                   TH
                 </div>
                 <h2 className="text-xl font-extrabold text-slate-900">THOUESA LOGISTICS</h2>
@@ -70,7 +70,7 @@ export const WaybillModal: React.FC<WaybillModalProps> = ({
           </div>
 
           {/* Hubs & Route */}
-          <div className="grid grid-cols-2 gap-4 bg-white p-4 rounded-lg border border-slate-200 mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white p-4 rounded-lg border border-slate-200 mb-4">
             <div>
               <span className="text-[11px] text-slate-400 font-semibold uppercase block">
                 {isAr ? 'مركز الانطلاق (Origin Hub)' : 'Origin Hub'}
@@ -88,7 +88,7 @@ export const WaybillModal: React.FC<WaybillModalProps> = ({
           </div>
 
           {/* Sender & Recipient */}
-          <div className="grid grid-cols-2 gap-4 text-xs mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs mb-4">
             <div className="bg-white p-3 rounded-lg border border-slate-200">
               <span className="font-bold text-slate-800 block mb-1">{isAr ? 'بيانات المرسل' : 'Sender'}</span>
               <p className="text-slate-700">{shipment.senderName}</p>
@@ -105,7 +105,7 @@ export const WaybillModal: React.FC<WaybillModalProps> = ({
           {/* Cargo Specs */}
           <div className="bg-white p-4 rounded-lg border border-slate-200 mb-4 text-xs">
             <h4 className="font-bold text-slate-800 mb-2">{isAr ? 'مواصفات الطرد والتأمين' : 'Cargo & Escrow Specifications'}</h4>
-            <div className="grid grid-cols-4 gap-2 text-slate-600">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 text-slate-600">
               <div>
                 <span className="text-slate-400 block">{isAr ? 'الوزن المعتمد' : 'Scale Weight'}</span>
                 <span className="font-bold text-slate-900">{shipment.actualWeightKg || shipment.estimatedWeightKg} كغم</span>
@@ -155,7 +155,7 @@ export const WaybillModal: React.FC<WaybillModalProps> = ({
           </button>
           <button
             onClick={handlePrint}
-            className="flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors"
+            className="flex items-center gap-1.5 px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold rounded-lg transition-colors"
           >
             <Printer className="w-4 h-4" />
             <span>{isAr ? 'طباعة البوليصة' : 'Print Waybill'}</span>

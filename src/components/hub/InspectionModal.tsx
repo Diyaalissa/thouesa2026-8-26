@@ -77,7 +77,7 @@ export const InspectionModal: React.FC<InspectionModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-slate-800 bg-slate-950/80">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 border border-blue-500/30 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-brand-500/20 text-brand-300 border border-brand-400/30 flex items-center justify-center shrink-0">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
@@ -161,7 +161,7 @@ export const InspectionModal: React.FC<InspectionModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setSecuritySealId(`SEAL-${hubCode}-${Math.floor(10000 + Math.random() * 90000)}`)}
-                  className="text-[10px] text-blue-400 hover:underline flex items-center gap-1"
+                  className="text-[10px] text-brand-300 hover:underline flex items-center gap-1"
                 >
                   <Sparkles className="w-3 h-3" />
                   <span>{isAr ? 'توليد ختم عشوائي' : 'Regenerate'}</span>
@@ -181,19 +181,19 @@ export const InspectionModal: React.FC<InspectionModalProps> = ({
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <label className="font-bold text-white flex items-center gap-1.5">
-                  <Camera className="w-4 h-4 text-blue-400" />
+                  <Camera className="w-4 h-4 text-brand-300" />
                   <span>{isAr ? 'صور التوثيق والفحص (360° Hub Photos):' : '360° Inspection Photos:'}</span>
                 </label>
                 <button
                   type="button"
                   onClick={() => setPhotos([...photos, 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&auto=format&fit=crop&q=80'])}
-                  className="text-[10px] text-blue-400 hover:underline"
+                  className="text-[10px] text-brand-300 hover:underline"
                 >
                   + {isAr ? 'التقاط صورة جديدة' : 'Add Photo'}
                 </button>
               </div>
 
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                 {photos.map((url, idx) => (
                   <div key={idx} className="relative aspect-video rounded-xl overflow-hidden border border-slate-700 bg-slate-950">
                     <img src={url} alt={`Inspection Photo ${idx + 1}`} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
@@ -212,7 +212,7 @@ export const InspectionModal: React.FC<InspectionModalProps> = ({
                 rows={2}
                 value={inspectionNotes}
                 onChange={(e) => setInspectionNotes(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-slate-200 focus:outline-hidden focus:border-blue-500"
+                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-slate-200 focus:outline-hidden focus:border-brand-400"
               />
             </div>
 
@@ -228,7 +228,7 @@ export const InspectionModal: React.FC<InspectionModalProps> = ({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-blue-600/30 cursor-pointer"
+                className="px-6 py-2.5 bg-brand-500 hover:bg-brand-400 text-white font-bold rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-brand-500/30 cursor-pointer"
               >
                 <CheckCircle2 className="w-4 h-4" />
                 <span>{isSubmitting ? (isAr ? 'جاري الحفظ...' : 'Saving...') : (isAr ? 'اعتماد الفحص وإصدار البوليصة' : 'Approve & Issue Bill of Lading')}</span>
@@ -248,7 +248,7 @@ export const InspectionModal: React.FC<InspectionModalProps> = ({
                   <span className="font-mono font-bold text-xs bg-slate-100 px-2 py-1 rounded-md border border-slate-300">
                     {shipment.trackingNumber}
                   </span>
-                  <p className="text-[10px] text-emerald-600 font-bold mt-1">✓ INSPECTED & SEALED</p>
+                  <p className="text-[10px] text-teal-600 font-bold mt-1">✓ INSPECTED & SEALED</p>
                 </div>
               </div>
 
@@ -260,7 +260,7 @@ export const InspectionModal: React.FC<InspectionModalProps> = ({
                 <span className="font-mono text-[11px] text-slate-600">*{shipment.trackingNumber}*</span>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 text-xs">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                 <div>
                   <span className="text-slate-400 block text-[10px]">ORIGIN / DESTINATION:</span>
                   <span className="font-bold text-slate-900">HUB-{hubCode} ➔ DESTINATION</span>
@@ -271,7 +271,7 @@ export const InspectionModal: React.FC<InspectionModalProps> = ({
                 </div>
                 <div>
                   <span className="text-slate-400 block text-[10px]">VERIFIED SCALE WEIGHT:</span>
-                  <span className="font-mono font-bold text-emerald-600">{actualWeightKg} kg</span>
+                  <span className="font-mono font-bold text-teal-600">{actualWeightKg} kg</span>
                 </div>
                 <div>
                   <span className="text-slate-400 block text-[10px]">RECIPIENT:</span>
@@ -294,7 +294,7 @@ export const InspectionModal: React.FC<InspectionModalProps> = ({
               </button>
               <button
                 onClick={onClose}
-                className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs cursor-pointer"
+                className="px-6 py-2.5 bg-brand-500 hover:bg-brand-400 text-white font-bold rounded-xl text-xs cursor-pointer"
               >
                 {isAr ? 'إتمام الفحص والعودة' : 'Done & Return'}
               </button>

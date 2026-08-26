@@ -407,6 +407,7 @@ export default function App() {
     >
       {/* Brand Header */}
       <Header
+        logoUrl="https://www.gstatic.com/mobilesdk/250721_mobilesdk/mono_firebase_dark.svg"
         currentUser={currentUser}
         wallet={wallet}
         currentRole={currentRole}

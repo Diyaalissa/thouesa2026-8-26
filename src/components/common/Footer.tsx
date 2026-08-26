@@ -42,14 +42,14 @@ export const Footer: React.FC<FooterProps> = ({ locale, themeMode = 'light', onO
 
             <button
               onClick={() => setShowAllHubs(!showAllHubs)}
-              className="text-[11px] text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1 cursor-pointer transition-colors"
+              className="text-[11px] text-brand-300 hover:text-brand-300 font-semibold flex items-center gap-1 cursor-pointer transition-colors"
             >
               <span>{showAllHubs ? (isAr ? 'إخفاء التفاصيل' : 'Hide Details') : (isAr ? 'عرض كافة تفاصيل الفروع' : 'View Full Address Details')}</span>
               {showAllHubs ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 lg:grid-cols-5 gap-3">
             {HUBS_DATA.map((hub) => (
               <div 
                 key={hub.id} 
@@ -57,7 +57,7 @@ export const Footer: React.FC<FooterProps> = ({ locale, themeMode = 'light', onO
               >
                 <div className="flex items-center justify-between mb-1.5">
                   <div className="font-bold text-white text-[11px] flex items-center gap-1.5">
-                    <Building2 className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                    <Building2 className="w-3.5 h-3.5 text-brand-300 shrink-0" />
                     <span className="truncate">{isAr ? hub.cityAr : hub.cityEn}</span>
                   </div>
                   <span className="text-[9px] font-mono px-1.5 py-0.5 bg-slate-800 text-slate-300 rounded">
@@ -110,7 +110,7 @@ export const Footer: React.FC<FooterProps> = ({ locale, themeMode = 'light', onO
                 {isAr ? 'معايير أمان IATA للطيران' : 'IATA Aviation Standards'}
               </span>
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-slate-300">
-                <Terminal className="w-3.5 h-3.5 text-blue-400" />
+                <Terminal className="w-3.5 h-3.5 text-brand-300" />
                 {isAr ? 'متوافق مع خوادم cPanel & LiteSpeed' : 'cPanel & LiteSpeed Ready'}
               </span>
             </div>
@@ -166,7 +166,7 @@ export const Footer: React.FC<FooterProps> = ({ locale, themeMode = 'light', onO
               <li>
                 <button
                   onClick={onOpenLegal}
-                  className="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1.5 cursor-pointer"
+                  className="text-brand-300 hover:text-brand-300 font-semibold flex items-center gap-1.5 cursor-pointer"
                 >
                   <Scale className="w-3.5 h-3.5" />
                   <span>{isAr ? 'الشروط واللوائح الجمركية' : 'Customs Regulations & Terms'}</span>

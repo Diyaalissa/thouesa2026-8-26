@@ -1,0 +1,106 @@
+{
+  "collections": [
+    {
+      "name": "users",
+      "rules": [
+        { "allow": "read", "condition": "request.auth != null" },
+        { "allow": "create", "condition": "request.auth != null && request.auth.uid == documentId" },
+        { "allow": "update", "condition": "request.auth != null && (request.auth.uid == documentId || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['MASTER_ADMIN', 'EMPLOYEE', 'HUB_MANAGER', 'HUB_AGENT', 'HUB_INSPECTOR'])" },
+        { "allow": "delete", "condition": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'MASTER_ADMIN'" }
+      ]
+    },
+    {
+      "name": "employees",
+      "rules": [
+        { "allow": "read", "condition": "request.auth != null" },
+        { "allow": "write", "condition": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'MASTER_ADMIN'" }
+      ]
+    },
+    {
+      "name": "hubs",
+      "rules": [
+        { "allow": "read", "condition": "true" },
+        { "allow": "write", "condition": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'MASTER_ADMIN'" }
+      ]
+    },
+    {
+      "name": "shipments",
+      "rules": [
+        { "allow": "read", "condition": "request.auth != null && (resource.data.senderId == request.auth.uid || resource.data.assignedTravelerId == request.auth.uid || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['MASTER_ADMIN', 'EMPLOYEE', 'HUB_MANAGER', 'HUB_AGENT', 'HUB_INSPECTOR'])" },
+        { "allow": "create", "condition": "request.auth != null && request.resource.data.senderId == request.auth.uid" },
+        { "allow": "update", "condition": "request.auth != null && (resource.data.senderId == request.auth.uid || resource.data.assignedTravelerId == request.auth.uid || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['MASTER_ADMIN', 'EMPLOYEE', 'HUB_MANAGER', 'HUB_AGENT', 'HUB_INSPECTOR'])" },
+        { "allow": "delete", "condition": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'MASTER_ADMIN'" }
+      ]
+    },
+    {
+      "name": "trips",
+      "rules": [
+        { "allow": "read", "condition": "request.auth != null" },
+        { "allow": "create", "condition": "request.auth != null && request.resource.data.travelerId == request.auth.uid" },
+        { "allow": "update", "condition": "request.auth != null && (resource.data.travelerId == request.auth.uid || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['MASTER_ADMIN', 'EMPLOYEE', 'HUB_MANAGER', 'HUB_AGENT', 'HUB_INSPECTOR'])" },
+        { "allow": "delete", "condition": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'MASTER_ADMIN'" }
+      ]
+    },
+    {
+      "name": "manifests",
+      "rules": [
+        { "allow": "read", "condition": "request.auth != null && (resource.data.travelerId == request.auth.uid || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['MASTER_ADMIN', 'EMPLOYEE', 'HUB_MANAGER', 'HUB_AGENT', 'HUB_INSPECTOR'])" },
+        { "allow": "write", "condition": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['MASTER_ADMIN', 'EMPLOYEE', 'HUB_MANAGER', 'HUB_AGENT', 'HUB_INSPECTOR']" }
+      ]
+    },
+    {
+      "name": "escrow_wallets",
+      "rules": [
+        { "allow": "read", "condition": "request.auth != null && (resource.data.userId == request.auth.uid || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['MASTER_ADMIN', 'EMPLOYEE'])" },
+        { "allow": "write", "condition": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['MASTER_ADMIN', 'EMPLOYEE']" }
+      ]
+    },
+    {
+      "name": "financial_transactions",
+      "rules": [
+        { "allow": "read", "condition": "request.auth != null && (resource.data.userId == request.auth.uid || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['MASTER_ADMIN', 'EMPLOYEE'])" },
+        { "allow": "write", "condition": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['MASTER_ADMIN', 'EMPLOYEE']" }
+      ]
+    },
+    {
+      "name": "audit_logs",
+      "rules": [
+        { "allow": "read", "condition": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'MASTER_ADMIN'" },
+        { "allow": "create", "condition": "request.auth != null" },
+        { "allow": "update, delete", "condition": "false" }
+      ]
+    },
+    {
+      "name": "disputes",
+      "rules": [
+        { "allow": "read", "condition": "request.auth != null && (resource.data.claimantId == request.auth.uid || resource.data.respondentId == request.auth.uid || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['MASTER_ADMIN', 'EMPLOYEE', 'HUB_MANAGER'])" },
+        { "allow": "create", "condition": "request.auth != null && request.resource.data.claimantId == request.auth.uid" },
+        { "allow": "update", "condition": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['MASTER_ADMIN', 'EMPLOYEE', 'HUB_MANAGER']" },
+        { "allow": "delete", "condition": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'MASTER_ADMIN'" }
+      ]
+    },
+    {
+      "name": "exchange_rates",
+      "rules": [
+        { "allow": "read", "condition": "true" },
+        { "allow": "write", "condition": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'MASTER_ADMIN'" }
+      ]
+    },
+    {
+      "name": "route_pricing",
+      "rules": [
+        { "allow": "read", "condition": "true" },
+        { "allow": "write", "condition": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'MASTER_ADMIN'" }
+      ]
+    },
+    {
+      "name": "system_notifications",
+      "rules": [
+        { "allow": "read", "condition": "request.auth != null && (resource.data.targetUserId == request.auth.uid || resource.data.targetRole == get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role || resource.data.targetRole == 'ALL' || resource.data.targetRole == 'PUBLIC')" },
+        { "allow": "create", "condition": "request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['MASTER_ADMIN', 'EMPLOYEE', 'HUB_MANAGER', 'HUB_AGENT', 'HUB_INSPECTOR']" },
+        { "allow": "update", "condition": "request.auth != null && resource.data.targetUserId == request.auth.uid && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['isRead'])" },
+        { "allow": "delete", "condition": "request.auth != null && resource.data.targetUserId == request.auth.uid" }
+      ]
+    }
+  ]
+}

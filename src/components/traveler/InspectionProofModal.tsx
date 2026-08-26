@@ -31,7 +31,7 @@ export const InspectionProofModal: React.FC<InspectionProofModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-slate-800 bg-slate-950/80">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-teal-600/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center shrink-0">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
@@ -59,7 +59,7 @@ export const InspectionProofModal: React.FC<InspectionProofModalProps> = ({
         {/* Modal Body */}
         <div className="p-6 overflow-y-auto space-y-5 text-xs text-slate-300">
           {/* Tamper Seal & Weight Box */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3">
             <div className="p-4 bg-slate-950/70 border border-slate-800 rounded-2xl space-y-1">
               <div className="flex items-center justify-between text-slate-400 text-[11px]">
                 <span>{isAr ? 'رمز القفل الأمني المعتمد:' : 'Tamper Seal ID:'}</span>
@@ -109,7 +109,7 @@ export const InspectionProofModal: React.FC<InspectionProofModalProps> = ({
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="font-bold text-white flex items-center gap-1.5">
-                <ImageIcon className="w-4 h-4 text-blue-400" />
+                <ImageIcon className="w-4 h-4 text-brand-300" />
                 <span>{isAr ? 'صور التوثيق والفحص بالفرع (360°):' : '360° Hub Inspection Photos:'}</span>
               </span>
               <span className="text-[10px] text-slate-400">
@@ -117,7 +117,7 @@ export const InspectionProofModal: React.FC<InspectionProofModalProps> = ({
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
               {photos.map((url, idx) => (
                 <div key={idx} className="group relative rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 aspect-video">
                   <img
@@ -144,7 +144,7 @@ export const InspectionProofModal: React.FC<InspectionProofModalProps> = ({
           </span>
           <button
             onClick={onClose}
-            className="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs transition-colors cursor-pointer"
+            className="px-5 py-2 bg-teal-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs transition-colors cursor-pointer"
           >
             {isAr ? 'إغلاق المعاينة' : 'Done'}
           </button>

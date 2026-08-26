@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import { db } from '../store';
 import { calculateShippingQuote, generateTrackingNumber } from '../../src/lib/crypto';
 import { Shipment, ShipmentStatus } from '../../src/types';
+import { broadcastNotification } from './notifications';
 
 export const shipmentsRouter = Router();
 
@@ -205,6 +206,18 @@ shipmentsRouter.post('/', (req: Request, res: Response) => {
       destinationHub: destHub.code,
     },
   });
+
+  const newNotif = db.pushNotification({
+    type: 'ORDER_CREATED',
+    titleAr: `طلب شحن جديد: ${trackingNumber}`,
+    titleEn: `New Shipment Created: ${trackingNumber}`,
+    messageAr: `تم إنشاء شحنة جديدة بواسطة ${senderName} (${itemDescription.slice(0, 40)}...) بقيمة مصرحة $${declaredValue}.`,
+    messageEn: `New shipment created by ${senderName} (${itemDescription.slice(0, 40)}...) with declared value $${declaredValue}.`,
+    targetRole: 'ALL',
+    referenceId: newShipment.id,
+    priority: 'NORMAL',
+  });
+  broadcastNotification(newNotif);
 
   res.status(201).json({
     success: true,

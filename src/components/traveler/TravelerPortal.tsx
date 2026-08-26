@@ -20,6 +20,7 @@ import {
 import { EscrowWallet, Locale, Manifest, Shipment, Trip, User } from '../../types';
 import { StatusBadge } from '../common/StatusBadge';
 import { QRModal } from '../common/QRModal';
+import { TripManager } from './TripManager';
 import { InspectionProofModal } from './InspectionProofModal';
 import { formatCurrency, generateCryptographicHandoverToken } from '../../lib/crypto';
 import { HUBS_DATA } from '../../lib/constants';
@@ -54,6 +55,7 @@ export const TravelerPortal: React.FC<TravelerPortalProps> = ({
   const isAr = locale === 'ar';
   const ArrowIcon = isAr ? ArrowLeft : ArrowRight;
 
+    const [activeTripId, setActiveTripId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'MY_TRIPS' | 'NEW_TRIP' | 'WALLET'>('MY_TRIPS');
   const [selectedQRManifest, setSelectedQRManifest] = useState<Manifest | null>(null);
   const [activeHandoverToken, setActiveHandoverToken] = useState<string>('');
@@ -143,7 +145,7 @@ export const TravelerPortal: React.FC<TravelerPortalProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-              <Plane className="w-5 h-5 text-emerald-600" />
+              <Plane className="w-5 h-5 text-teal-600" />
               <span>{isAr ? 'بوابة المسافر المعتمد والضمان المالي' : 'Traveler Portal & Escrow Manager'}</span>
             </h2>
             <span className="text-xs bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-full border border-emerald-200">
@@ -162,7 +164,7 @@ export const TravelerPortal: React.FC<TravelerPortalProps> = ({
             onClick={() => setActiveTab('MY_TRIPS')}
             className={`px-4 py-2 rounded-xl text-xs font-semibold transition-colors ${
               activeTab === 'MY_TRIPS'
-                ? 'bg-emerald-600 text-white shadow-xs'
+                ? 'bg-teal-600 text-white shadow-xs'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
@@ -172,7 +174,7 @@ export const TravelerPortal: React.FC<TravelerPortalProps> = ({
             onClick={() => setActiveTab('NEW_TRIP')}
             className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-colors ${
               activeTab === 'NEW_TRIP'
-                ? 'bg-emerald-600 text-white shadow-xs'
+                ? 'bg-teal-600 text-white shadow-xs'
                 : 'bg-slate-900 text-white hover:bg-slate-800'
             }`}
           >
@@ -183,11 +185,11 @@ export const TravelerPortal: React.FC<TravelerPortalProps> = ({
             onClick={() => setActiveTab('WALLET')}
             className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-colors ${
               activeTab === 'WALLET'
-                ? 'bg-emerald-600 text-white shadow-xs'
+                ? 'bg-teal-600 text-white shadow-xs'
                 : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
             }`}
           >
-            <Wallet className="w-3.5 h-3.5 text-emerald-600" />
+            <Wallet className="w-3.5 h-3.5 text-teal-600" />
             <span>{isAr ? 'محفظة الأرباح والضمان' : 'Earnings & Escrow'}</span>
           </button>
         </div>
@@ -213,7 +215,24 @@ export const TravelerPortal: React.FC<TravelerPortalProps> = ({
       </div>
 
       {/* TAB 1: MY TRIPS */}
-      {activeTab === 'MY_TRIPS' && (
+      {activeTab === 'MY_TRIPS' && activeTripId && (() => {
+        const trip = travelerTrips.find(t => t.id === activeTripId);
+        if (!trip) return null;
+        return (
+          <TripManager 
+            trip={trip}
+            manifests={manifests}
+            shipments={shipments}
+            locale={locale}
+            onBack={() => setActiveTripId(null)}
+            onLockEscrow={onLockEscrow}
+            onEmergencyUnassign={onEmergencyUnassign}
+            onOpenQR={handleOpenQR}
+            onViewInspection={(s) => setSelectedShipmentForProof(s)}
+          />
+        );
+      })()}
+      {activeTab === 'MY_TRIPS' && !activeTripId && (
         <div className="space-y-4">
           <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">
             {isAr ? 'قائمة رحلات الطيران وسعات الأمتعة المسجلة' : 'Registered Flights & Allocated Luggage'}
@@ -241,7 +260,7 @@ export const TravelerPortal: React.FC<TravelerPortalProps> = ({
                           {destHub ? (isAr ? destHub.cityAr : destHub.cityEn) : ''})
                         </span>
                       </div>
-                      <p className="text-xs text-blue-600 font-semibold mt-0.5 flex items-center gap-1">
+                      <p className="text-xs text-brand-500 font-semibold mt-0.5 flex items-center gap-1">
                         <Plane className="w-3 h-3" />
                         {trip.airline} ({trip.flightNumber}) • PNR: {trip.pnrCode}
                       </p>
@@ -250,14 +269,14 @@ export const TravelerPortal: React.FC<TravelerPortalProps> = ({
                   </div>
 
                   {/* Weight, Earnings & Escrow */}
-                  <div className="grid grid-cols-3 gap-2 bg-slate-50 p-3 rounded-xl text-xs text-slate-700">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 bg-slate-50 p-3 rounded-xl text-xs text-slate-700">
                     <div>
                       <span className="text-slate-400 block text-[11px]">{isAr ? 'السعة المتاحة' : 'Capacity'}</span>
                       <span className="font-bold text-slate-900">{trip.availableWeightKg} كغم</span>
                     </div>
                     <div>
                       <span className="text-slate-400 block text-[11px]">{isAr ? 'الأرباح المقدرة' : 'Earnings'}</span>
-                      <span className="font-bold text-emerald-600">{formatCurrency(trip.totalEarningsEstimated, 'USD')}</span>
+                      <span className="font-bold text-teal-600">{formatCurrency(trip.totalEarningsEstimated, 'USD')}</span>
                     </div>
                     <div>
                       <span className="text-slate-400 block text-[11px]">{isAr ? 'مبلغ التأمين' : 'Escrow Hold'}</span>
@@ -266,46 +285,13 @@ export const TravelerPortal: React.FC<TravelerPortalProps> = ({
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
-                    <div className="flex items-center gap-2">
-                      {!trip.isEscrowPaid ? (
-                        <button
-                          onClick={() => onLockEscrow(trip.id)}
-                          className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-xs transition-colors cursor-pointer"
-                        >
-                          <Lock className="w-3.5 h-3.5" />
-                          <span>{isAr ? 'حجز مبلغ الضمان المالي ($' + trip.requiredEscrowDeposit + ')' : 'Lock Escrow Hold'}</span>
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => handleOpenQR(trip)}
-                          className="flex items-center gap-1.5 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl shadow-xs transition-colors cursor-pointer"
-                        >
-                          <QrCode className="w-3.5 h-3.5 text-emerald-400" />
-                          <span>{isAr ? 'عرض رمز QR لتسليم/استلام الفرع' : 'Show Mutual QR Handover Pass'}</span>
-                        </button>
-                      )}
-
-                      {/* View Inspection Proof Button */}
-                      <button
-                        onClick={() => {
-                          const matched = shipments.find((s) => s.assignedTravelerId === trip.travelerId || s.originHubId === trip.originHubId) || shipments[0];
-                          if (matched) {
-                            setSelectedShipmentForProof(matched);
-                          }
-                        }}
-                        className="flex items-center gap-1 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-colors cursor-pointer"
-                      >
-                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                        <span>{isAr ? 'شهادة الفحص والأختام' : 'Inspection & Seals'}</span>
-                      </button>
-                    </div>
-
+                  <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-100 mt-2">
                     <button
-                      onClick={() => setEmergencyTripId(trip.id)}
-                      className="text-xs text-rose-600 hover:text-rose-700 font-semibold px-2 py-1 cursor-pointer"
+                      onClick={() => setActiveTripId(trip.id)}
+                      className="w-full flex items-center justify-center gap-1.5 px-4 py-3 bg-teal-50 hover:bg-teal-100 text-teal-700 text-xs font-bold rounded-xl transition-colors cursor-pointer border border-teal-200"
                     >
-                      {isAr ? 'طوارئ الرحلة / إلغاء' : 'Flight Emergency'}
+                      <Plane className="w-4 h-4" />
+                      <span>{isAr ? 'إدارة الرحلة والمستندات' : 'Manage Trip & Documents'}</span>
                     </button>
                   </div>
                 </div>
@@ -333,7 +319,7 @@ export const TravelerPortal: React.FC<TravelerPortalProps> = ({
           </div>
 
           <form onSubmit={handleRegisterSubmit} className="space-y-4 text-xs">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
               <div>
                 <label className="block font-semibold mb-1">{isAr ? 'مركز المغادرة (Origin Hub)' : 'Origin Hub'}</label>
                 <select
@@ -365,7 +351,7 @@ export const TravelerPortal: React.FC<TravelerPortalProps> = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-3">
               <div>
                 <label className="block font-semibold mb-1">{isAr ? 'شركة الطيران' : 'Airline'}</label>
                 <input
@@ -392,7 +378,7 @@ export const TravelerPortal: React.FC<TravelerPortalProps> = ({
                   type="text"
                   value={pnrCode}
                   onChange={(e) => setPNRCode(e.target.value)}
-                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold text-blue-700"
+                  className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold text-brand-600"
                 />
               </div>
             </div>
@@ -400,7 +386,7 @@ export const TravelerPortal: React.FC<TravelerPortalProps> = ({
             <div>
               <div className="flex justify-between items-center mb-1">
                 <label className="font-semibold">{isAr ? 'سعة الوزن المتاحة للأمتعة (كغم)' : 'Available Luggage Weight (kg)'}</label>
-                <span className="font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">{availableWeightKg} كغم</span>
+                <span className="font-bold text-teal-600 bg-emerald-50 px-2 py-0.5 rounded-md">{availableWeightKg} كغم</span>
               </div>
               <input
                 type="range"
@@ -409,12 +395,12 @@ export const TravelerPortal: React.FC<TravelerPortalProps> = ({
                 step="1"
                 value={availableWeightKg}
                 onChange={(e) => setAvailableWeightKg(Number(e.target.value))}
-                className="w-full accent-emerald-600"
+                className="w-full accent-teal-600"
               />
             </div>
 
-            <div className="p-3 bg-blue-50 border border-blue-200 rounded-xl text-blue-900 flex items-center gap-2">
-              <FileCheck className="w-4 h-4 text-blue-700 shrink-0" />
+            <div className="p-3 bg-brand-50 border border-brand-200 rounded-xl text-brand-900 flex items-center gap-2">
+              <FileCheck className="w-4 h-4 text-brand-600 shrink-0" />
               <span>
                 {isAr
                   ? `أرباحك التقديرية لهذه الرحلة: $${(availableWeightKg * 12.0).toFixed(2)} (تحول لمحفظتك فور التسليم).`
@@ -425,7 +411,7 @@ export const TravelerPortal: React.FC<TravelerPortalProps> = ({
             <button
               type="submit"
               disabled={isSubmittingTrip}
-              className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold rounded-xl text-xs shadow-md transition-colors"
+              className="w-full py-3 bg-teal-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold rounded-xl text-xs shadow-md transition-colors"
             >
               {isSubmittingTrip ? (isAr ? 'جارِ التحقق من PNR...' : 'Verifying PNR...') : isAr ? 'توثيق التذكرة وحفظ الرحلة' : 'Register Flight'}
             </button>
@@ -454,7 +440,7 @@ export const TravelerPortal: React.FC<TravelerPortalProps> = ({
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">{isAr ? 'أرباح معلقة قيد الرحلة:' : 'Pending Trip Earnings:'}</span>
-                <span className="font-bold text-blue-400">
+                <span className="font-bold text-brand-300">
                   {wallet ? formatCurrency(wallet.pendingEarnings, 'USD') : '$0.00'}
                 </span>
               </div>
@@ -501,7 +487,7 @@ export const TravelerPortal: React.FC<TravelerPortalProps> = ({
               <button
                 type="submit"
                 disabled={isWithdrawing || (wallet && wallet.balance < withdrawAmount)}
-                className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold rounded-xl text-xs transition-colors shadow-xs"
+                className="w-full py-3 bg-teal-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold rounded-xl text-xs transition-colors shadow-xs"
               >
                 {isWithdrawing ? (isAr ? 'جارِ التحويل...' : 'Processing...') : isAr ? 'تأكيد تحويل الأرباح الآن' : 'Execute Instant Payout'}
               </button>
