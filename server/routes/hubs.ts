@@ -35,6 +35,23 @@ hubsRouter.get('/', (req: Request, res: Response) => {
   res.json({ success: true, hubs });
 });
 
+// Overview stats for all hubs
+hubsRouter.get('/overview', (req: Request, res: Response) => {
+  const hubs = Array.from(db.hubs.values());
+  const shipments = Array.from(db.shipments.values());
+  const manifests = Array.from(db.manifests.values());
+
+  res.json({
+    success: true,
+    totalHubs: hubs.length,
+    hubs,
+    totalPendingInspections: shipments.filter((s) => s.currentStatus === 'PENDING_DROPOFF').length,
+    totalInspectedSealed: shipments.filter((s) => s.currentStatus === 'INSPECTED_SEALED' || s.currentStatus === 'INSPECTED_AND_SEALED').length,
+    totalInTransit: shipments.filter((s) => s.currentStatus === 'IN_TRANSIT').length,
+    activeManifestsCount: manifests.length,
+  });
+});
+
 // Physical Intake & Inspection at Origin Hub (Scales weighing + Tamper Seal + 360° Photos)
 hubsRouter.post('/shipments/:id/inspect', (req: Request, res: Response) => {
   const { id } = req.params;
