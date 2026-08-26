@@ -52,6 +52,9 @@ export interface User {
   passportNumber?: string;
   nationalId?: string;
   nationality?: string;
+  idDocumentFrontUrl?: string;
+  idDocumentBackUrl?: string;
+  passportPhotoUrl?: string;
   selfieWithIdUrl?: string;
   rating?: number;
   totalTrips?: number;
@@ -123,7 +126,9 @@ export interface Shipment {
   recipientNationalId?: string;
   itemCategory: ItemCategory;
   itemDescription: string;
+  purpose?: string;
   itemPhotos: string[];
+  invoicePhotos?: string[];
   inspectionPhotos?: string[]; // 360° photo URLs taken at Hub
   inspectionNotes?: string;
   inspectedByAgentId?: string;

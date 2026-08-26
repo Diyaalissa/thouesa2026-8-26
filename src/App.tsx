@@ -20,6 +20,7 @@ import { TravelerPortal } from './components/traveler/TravelerPortal';
 import { HubPortal } from './components/hub/HubPortal';
 import { AdminPortal } from './components/admin/AdminPortal';
 import { LegalPages } from './components/legal/LegalPages';
+import { Footer } from './components/common/Footer';
 import { ShieldCheck, Phone, Mail, MapPin, Globe, Sparkles, Scale } from 'lucide-react';
 
 export default function App() {
@@ -479,36 +480,12 @@ export default function App() {
         )}
       </main>
 
-      {/* Global Footer */}
-      <footer className="bg-slate-900 text-slate-400 border-t border-slate-800 text-xs py-8 px-4 mt-auto">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 text-white font-black text-sm">
-              <span>{isAr ? 'منصة ثويسا اللوجستية (THOUESA)' : 'THOUESA Logistics Platform'}</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-            </div>
-            <p className="text-[11px] text-slate-500 mt-1">
-              {isAr
-                ? 'نموذج الشحن الجوي التشاركي الهجين — الأردن، الجزائر، مصر، السعودية'
-                : 'P2P Cross-Border Logistics & Escrow Network — Jordan, Algeria, Egypt, Saudi Arabia'}
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-4 text-[11px]">
-            <button
-              onClick={() => setCurrentRole('LEGAL')}
-              className="text-blue-400 hover:text-blue-300 font-bold hover:underline flex items-center gap-1 cursor-pointer"
-            >
-              <Scale className="w-3.5 h-3.5" />
-              <span>{isAr ? 'الشروط واللوائح الجمركية' : 'Legal & Customs Regulations'}</span>
-            </button>
-            <span>•</span>
-            <span>{isAr ? 'مرخص بموجب قوانين السلامة الجوية الدولية (IATA)' : 'Compliant with Aviation Safety Standards'}</span>
-            <span>•</span>
-            <span>{isAr ? 'تشغيل وإدارة خوادم cPanel & LiteSpeed' : 'cPanel & LiteSpeed Ready'}</span>
-          </div>
-        </div>
-      </footer>
+      {/* Global Unified Footer */}
+      <Footer
+        locale={locale}
+        onOpenLegal={() => setCurrentRole('LEGAL')}
+        onSelectRole={(role) => setCurrentRole(role)}
+      />
 
       {/* Central Auth & Registration Modal */}
       <AuthModal

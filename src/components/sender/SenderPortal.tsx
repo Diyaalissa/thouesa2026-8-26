@@ -81,6 +81,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
 
   // Option 1: Send Personal Parcel State
   const [parcelCategory, setParcelCategory] = useState<ItemCategory>('ELECTRONICS');
+  const [parcelPurpose, setParcelPurpose] = useState('استخدام شخصي / هدية عائلية');
   const [parcelDescription, setParcelDescription] = useState('جهاز لوحي وحافظة إلكترونية وملحقاتها');
   const [parcelDeclaredValue, setParcelDeclaredValue] = useState(400);
   const [parcelEstimatedWeightKg, setParcelEstimatedWeightKg] = useState(2.0);
@@ -148,6 +149,7 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
       recipientNationalId,
       itemCategory: parcelCategory,
       itemDescription: parcelDescription,
+      purpose: parcelPurpose,
       declaredValue: parcelDeclaredValue,
       estimatedWeightKg: parcelEstimatedWeightKg,
       dimensionsCm: { length: parcelLengthCm, width: parcelWidthCm, height: parcelHeightCm },
@@ -541,6 +543,25 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
             </div>
 
             <div>
+              <label className="block text-xs font-semibold text-slate-300 mb-1">
+                {isAr ? 'غرض الشحنة / طبيعة الاستخدام' : 'Shipment Purpose'}
+              </label>
+              <select
+                value={parcelPurpose}
+                onChange={(e) => setParcelPurpose(e.target.value)}
+                className="w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white"
+              >
+                <option value="استخدام شخصي / هدية عائلية">{isAr ? 'استخدام شخصي / هدية عائلية' : 'Personal Use / Family Gift'}</option>
+                <option value="شراء متجر دولي (تجارة شخصية)">{isAr ? 'شراء متجر دولي (تجارة شخصية)' : 'International Purchase'}</option>
+                <option value="مستندات وأوراق دراسية أو قانونية">{isAr ? 'مستندات وأوراق دراسية أو قانونية' : 'Academic / Legal Documents'}</option>
+                <option value="مستلزمات عمل ومعدات تقنية">{isAr ? 'مستلزمات عمل ومعدات تقنية' : 'Work / Tech Equipment'}</option>
+                <option value="علاج ومستلزمات رعاية صحية">{isAr ? 'علاج ومستلزمات رعاية صحية' : 'Healthcare / Medical'}</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1">{isAr ? 'القيمة المصرح بها ($ لتحديد الضمان المسترد)' : 'Declared Value ($)'}</label>
               <input
                 type="number"
@@ -548,6 +569,19 @@ export const SenderPortal: React.FC<SenderPortalProps> = ({
                 value={parcelDeclaredValue}
                 onChange={(e) => setParcelDeclaredValue(Number(e.target.value))}
                 className="w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs font-bold text-emerald-400"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-slate-300 mb-1">{isAr ? 'الوزن التقديري (كغ)' : 'Estimated Weight (kg)'}</label>
+              <input
+                type="number"
+                step="0.1"
+                min="0.2"
+                max="25"
+                value={parcelEstimatedWeightKg}
+                onChange={(e) => setParcelEstimatedWeightKg(Number(e.target.value))}
+                className="w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white"
               />
             </div>
           </div>

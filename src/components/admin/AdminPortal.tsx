@@ -45,8 +45,9 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 }) => {
   const isAr = locale === 'ar';
   const [activeTab, setActiveTab] = useState<
-    'METRICS' | 'EMPLOYEES' | 'KYC_MANAGER' | 'RATES_LOCK' | 'AUDIT_LOGS' | 'CRON_TERMINAL'
+    'METRICS' | 'EMPLOYEES' | 'KYC_MANAGER' | 'RATES_LOCK' | 'AUDIT_LOGS' | 'CRON_TERMINAL' | 'SYSTEM_SETTINGS'
   >('METRICS');
+  const [selectedUserForKyc, setSelectedUserForKyc] = useState<User | null>(null);
   const [exchangeRates, setExchangeRates] = useState<ExchangeRate[]>(DEFAULT_EXCHANGE_RATES);
   const [cronRunning, setCronRunning] = useState(false);
   const [cronLogs, setCronLogs] = useState<string[]>([]);
@@ -197,6 +198,15 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
           }`}
         >
           {isAr ? 'مهام cPanel المجدولة (Cron Jobs)' : 'cPanel Cron Terminal'}
+        </button>
+        <button
+          onClick={() => setActiveTab('SYSTEM_SETTINGS')}
+          className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl transition-all cursor-pointer ${
+            activeTab === 'SYSTEM_SETTINGS' ? 'bg-white text-slate-900 shadow-xs font-bold text-blue-700' : 'text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <Building2 className="w-3.5 h-3.5 text-blue-600" />
+          <span>{isAr ? 'إعدادات النظام وعناويننا' : 'System Hubs & Addresses'}</span>
         </button>
       </div>
 
@@ -390,31 +400,57 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
       {/* TAB 3: KYC MANAGER */}
       {activeTab === 'KYC_MANAGER' && (
         <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-4">
-          <h3 className="text-sm font-bold text-slate-900">{isAr ? 'طلبات التحقق من الهوية الوطنية وجوازات السفر' : 'Traveler KYC Verification Requests'}</h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-bold text-slate-900">
+              {isAr ? 'طلبات التحقق من الهوية الوطنية وجوازات السفر (KYC Documents)' : 'Traveler KYC Verification & Identity Photos'}
+            </h3>
+            <span className="text-xs text-slate-500 font-medium">
+              {users.filter(u => u.kycStatus === 'PENDING').length} {isAr ? 'قيد المراجعة' : 'Pending Review'}
+            </span>
+          </div>
 
           <div className="border border-slate-200 rounded-xl overflow-hidden text-xs">
             <table className="w-full text-start">
               <thead className="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200">
                 <tr>
-                  <th className="p-3 text-start">{isAr ? 'المستخدم' : 'User'}</th>
-                  <th className="p-3 text-start">{isAr ? 'الدور' : 'Role'}</th>
-                  <th className="p-3 text-start">{isAr ? 'البلد' : 'Country'}</th>
+                  <th className="p-3 text-start">{isAr ? 'المستخدم والاتصال' : 'User & Contact'}</th>
+                  <th className="p-3 text-start">{isAr ? 'الدور والبلد' : 'Role & Country'}</th>
+                  <th className="p-3 text-start">{isAr ? 'الجنسية / الهوية' : 'Nationality & ID'}</th>
                   <th className="p-3 text-start">{isAr ? 'حالة KYC' : 'KYC Status'}</th>
+                  <th className="p-3 text-start">{isAr ? 'معاينة الوثائق' : 'Inspect Documents'}</th>
                   <th className="p-3 text-start">{isAr ? 'الإجراء' : 'Actions'}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-800">
                 {users.map((u) => (
                   <tr key={u.id} className="hover:bg-slate-50">
-                    <td className="p-3 font-semibold">{u.fullName} ({u.phone})</td>
-                    <td className="p-3">{u.role}</td>
-                    <td className="p-3">{u.country}</td>
+                    <td className="p-3 font-semibold">
+                      <div>{u.fullName}</div>
+                      <div className="text-[11px] text-slate-500 font-mono">{u.phone}</div>
+                    </td>
+                    <td className="p-3">
+                      <div>{u.role}</div>
+                      <div className="text-[11px] text-slate-500">{u.country}</div>
+                    </td>
+                    <td className="p-3">
+                      <div>{u.nationality || (u.country === 'DZA' ? 'Algerian' : 'Jordanian')}</div>
+                      <div className="text-[11px] text-slate-500 font-mono">{u.nationalIdNumber || 'ID-REG-2026'}</div>
+                    </td>
                     <td className="p-3">
                       <span className={`px-2 py-0.5 rounded-full font-bold text-[11px] ${
                         u.kycStatus === 'APPROVED' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
                       }`}>
                         {u.kycStatus}
                       </span>
+                    </td>
+                    <td className="p-3">
+                      <button
+                        onClick={() => setSelectedUserForKyc(u)}
+                        className="px-2.5 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-lg font-bold flex items-center gap-1 cursor-pointer transition-colors"
+                      >
+                        <FileText className="w-3 h-3" />
+                        <span>{isAr ? 'فحص الصور' : 'Inspect Photos'}</span>
+                      </button>
                     </td>
                     <td className="p-3">
                       <div className="flex gap-2">
@@ -437,6 +473,109 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
               </tbody>
             </table>
           </div>
+
+          {/* KYC Document Inspector Modal */}
+          {selectedUserForKyc && (
+            <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4">
+              <div className="bg-white rounded-2xl max-w-2xl w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+                  <div>
+                    <h4 className="text-base font-bold text-slate-900">
+                      {isAr ? 'وثائق إثبات الهوية وجواز السفر للمستخدم' : 'User KYC & Identity Verification Photos'}
+                    </h4>
+                    <p className="text-xs text-slate-500 font-medium">
+                      {selectedUserForKyc.fullName} — {selectedUserForKyc.phone} ({selectedUserForKyc.email})
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setSelectedUserForKyc(null)}
+                    className="text-slate-400 hover:text-slate-600 text-lg font-bold cursor-pointer p-1"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                  <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                    <span className="font-bold text-slate-800 block">
+                      {isAr ? 'بطاقة الهوية الوطنية (الوجه الأمامي)' : 'National ID (Front Side)'}
+                    </span>
+                    <div className="h-44 rounded-lg bg-slate-200 overflow-hidden border border-slate-300">
+                      <img
+                        src={selectedUserForKyc.idDocumentFrontUrl || 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=500&auto=format&fit=crop&q=80'}
+                        alt="ID Front"
+                        className="w-full h-full object-cover"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                    <span className="font-bold text-slate-800 block">
+                      {isAr ? 'بطاقة الهوية الوطنية (الوجه الخلفي)' : 'National ID (Back Side)'}
+                    </span>
+                    <div className="h-44 rounded-lg bg-slate-200 overflow-hidden border border-slate-300">
+                      <img
+                        src={selectedUserForKyc.idDocumentBackUrl || 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=500&auto=format&fit=crop&q=80'}
+                        alt="ID Back"
+                        className="w-full h-full object-cover"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                    <span className="font-bold text-slate-800 block">
+                      {isAr ? 'صفحة جواز السفر المعتمدة' : 'Passport Identification Page'}
+                    </span>
+                    <div className="h-44 rounded-lg bg-slate-200 overflow-hidden border border-slate-300">
+                      <img
+                        src={selectedUserForKyc.passportPhotoUrl || 'https://images.unsplash.com/photo-1544717302-de2939b7ef71?w=500&auto=format&fit=crop&q=80'}
+                        alt="Passport"
+                        className="w-full h-full object-cover"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                    <span className="font-bold text-slate-800 block">
+                      {isAr ? 'صورة شخصية مع الهوية (Selfie)' : 'Selfie with ID'}
+                    </span>
+                    <div className="h-44 rounded-lg bg-slate-200 overflow-hidden border border-slate-300">
+                      <img
+                        src={selectedUserForKyc.selfieWithIdUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80'}
+                        alt="Selfie verification"
+                        className="w-full h-full object-cover"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
+                  <button
+                    onClick={() => {
+                      onApproveKYC(selectedUserForKyc.id, 'REJECTED');
+                      setSelectedUserForKyc(null);
+                    }}
+                    className="px-4 py-2 bg-rose-100 hover:bg-rose-200 text-rose-800 font-bold rounded-xl cursor-pointer text-xs"
+                  >
+                    {isAr ? 'رفض الطلب' : 'Reject KYC'}
+                  </button>
+                  <button
+                    onClick={() => {
+                      onApproveKYC(selectedUserForKyc.id, 'APPROVED');
+                      setSelectedUserForKyc(null);
+                    }}
+                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl cursor-pointer text-xs"
+                  >
+                    {isAr ? 'اعتماد وتوثيق الهوية' : 'Approve & Verify KYC'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -536,6 +675,78 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
             <div className="text-slate-500">-- THOUESA cPanel Cron Output Console --</div>
             {cronLogs.map((log, idx) => (
               <div key={idx}>{log}</div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* TAB 7: SYSTEM SETTINGS & OUR OFFICIAL ADDRESSES */}
+      {activeTab === 'SYSTEM_SETTINGS' && (
+        <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs space-y-6 text-xs">
+          <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200">
+            <div>
+              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <Building2 className="w-5 h-5 text-blue-600" />
+                <span>{isAr ? 'إعدادات النظام وعناوين الفروع الرسمية (Our Addresses & Hub Registry)' : 'System Settings & Official Hub Directory'}</span>
+              </h3>
+              <p className="text-slate-500 mt-1">
+                {isAr
+                  ? 'سجل العناوين المعتمدة لمراكز الاستلام، نقاط التفتيش الأمني، وأرقام الاتصال المباشرة لشبكة ثويسا الدولية.'
+                  : 'Official registered physical hubs, security inspection checkpoints, direct contact lines, and storage metrics.'}
+              </p>
+            </div>
+            <span className="px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full font-bold text-xs">
+              {HUBS_DATA.length} {isAr ? 'فروع دولية معتمدة' : 'Active International Hubs'}
+            </span>
+          </div>
+
+          {/* Grid of All Hubs with Physical Address Details */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {HUBS_DATA.map((hub) => (
+              <div
+                key={hub.id}
+                className="bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-2xl p-5 space-y-3 transition-all"
+              >
+                <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+                  <div className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                    <span className="text-base">{hub.countryCode === 'JOR' ? '🇯🇴' : hub.countryCode === 'DZA' ? '🇩🇿' : hub.countryCode === 'EGY' ? '🇪🇬' : hub.countryCode === 'SAU' ? '🇸🇦' : '🇴🇲'}</span>
+                    <span>{isAr ? hub.cityAr : hub.cityEn}</span>
+                  </div>
+                  <span className="font-mono text-xs font-bold px-2 py-0.5 bg-slate-200 text-slate-700 rounded-md">
+                    {hub.code}
+                  </span>
+                </div>
+
+                <div className="space-y-2 text-slate-600">
+                  <div>
+                    <span className="font-semibold text-slate-800 block mb-0.5">{isAr ? 'العنوان الفعلي المعتمد:' : 'Physical Street Address:'}</span>
+                    <p className="text-xs bg-white p-2.5 rounded-lg border border-slate-200 text-slate-700 leading-relaxed">
+                      {hub.address}
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 pt-1">
+                    <div>
+                      <span className="text-slate-400 block text-[10px] uppercase font-bold">{isAr ? 'هاتف الفرع' : 'Phone'}</span>
+                      <span className="font-mono font-semibold text-slate-800 text-xs" dir="ltr">{hub.phone}</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block text-[10px] uppercase font-bold">{isAr ? 'المدير المسؤول' : 'Hub Manager'}</span>
+                      <span className="font-semibold text-slate-800 text-xs">{hub.managerName}</span>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-[11px]">
+                    <span className="text-slate-500">{isAr ? 'ساعات العمل الرسمية:' : 'Hours:'}</span>
+                    <span className="font-semibold text-emerald-700">{hub.operatingHours || '08:00 - 22:00'}</span>
+                  </div>
+
+                  <div className="flex items-center justify-between text-[11px]">
+                    <span className="text-slate-500">{isAr ? 'السعة التخزينية المتاحة:' : 'Capacity:'}</span>
+                    <span className="font-bold text-blue-700">{hub.storageCapacityKg || 2500} كغ (نشط)</span>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
