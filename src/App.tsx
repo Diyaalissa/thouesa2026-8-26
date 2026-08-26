@@ -11,7 +11,7 @@ import {
   AuditLog,
   ThemeMode,
 } from './types';
-import { DEMO_PROFILES, HUBS_DATA } from './lib/constants';
+import { DEMO_PROFILES, HUBS_DATA, THEMES } from './lib/constants';
 import { Header } from './components/common/Header';
 import { AuthModal } from './components/common/AuthModal';
 import { LandingPage } from './components/landing/LandingPage';
@@ -25,10 +25,30 @@ import { ShieldCheck, Phone, Mail, MapPin, Globe, Sparkles, Scale } from 'lucide
 
 export default function App() {
   const [locale, setLocale] = useState<Locale>('ar');
-  const [themeMode, setThemeMode] = useState<ThemeMode>('DARK_SLATE');
+  const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
+    try {
+      const saved = localStorage.getItem('thouesa_theme_mode') as ThemeMode;
+      return saved || 'light';
+    } catch {
+      return 'light';
+    }
+  });
   const [currentRole, setCurrentRole] = useState<UserRole | 'PUBLIC' | 'LEGAL'>('PUBLIC');
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [currentHub, setCurrentHub] = useState<Hub>(HUBS_DATA[0]); // AMM
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('thouesa_theme_mode', themeMode);
+    } catch (e) {
+      console.warn('Could not save theme preference:', e);
+    }
+    if (themeMode === 'light') {
+      document.documentElement.classList.remove('dark');
+    } else {
+      document.documentElement.classList.add('dark');
+    }
+  }, [themeMode]);
 
   // Auth Modal State
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -375,12 +395,14 @@ export default function App() {
   };
 
   const isAr = locale === 'ar';
+  const activeTheme = THEMES.find((t) => t.id === themeMode) || THEMES[0];
 
   return (
     <div
-      className={`min-h-screen bg-slate-100 text-slate-900 font-sans flex flex-col antialiased ${
-        isAr ? 'font-[Cairo,sans-serif]' : ''
-      }`}
+      id="thouesa-root-canvas"
+      className={`min-h-screen font-sans flex flex-col antialiased transition-colors duration-200 ${
+        activeTheme.bgClass
+      } ${isAr ? 'font-[Cairo,sans-serif]' : ''}`}
       dir={isAr ? 'rtl' : 'ltr'}
     >
       {/* Brand Header */}
@@ -483,6 +505,7 @@ export default function App() {
       {/* Global Unified Footer */}
       <Footer
         locale={locale}
+        themeMode={themeMode}
         onOpenLegal={() => setCurrentRole('LEGAL')}
         onSelectRole={(role) => setCurrentRole(role)}
       />

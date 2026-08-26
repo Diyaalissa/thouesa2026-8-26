@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Locale, UserRole } from '../../types';
+import { Locale, ThemeMode, UserRole } from '../../types';
 import { HUBS_DATA } from '../../lib/constants';
 import { 
   Building2, 
@@ -17,11 +17,12 @@ import {
 
 interface FooterProps {
   locale: Locale;
+  themeMode?: ThemeMode;
   onOpenLegal?: () => void;
   onSelectRole?: (role: UserRole) => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ locale, onOpenLegal, onSelectRole }) => {
+export const Footer: React.FC<FooterProps> = ({ locale, themeMode = 'light', onOpenLegal, onSelectRole }) => {
   const isAr = locale === 'ar';
   const [showAllHubs, setShowAllHubs] = useState(false);
 
