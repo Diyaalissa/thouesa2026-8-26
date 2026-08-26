@@ -1,0 +1,10 @@
+{
+  "name": "THOUESA - P2P Logistics & Escrow",
+  "description": "Peer-to-peer cross-border package delivery platform with a Hub-and-Spoke model, double-entry financial escrow, and cryptographic QR chain-of-custody.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
